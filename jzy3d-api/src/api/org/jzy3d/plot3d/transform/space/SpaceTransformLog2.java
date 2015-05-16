@@ -8,12 +8,12 @@ package org.jzy3d.plot3d.transform.space;
 public class SpaceTransformLog2 implements SpaceTransform{
 
 	@Override
-	public float compute(float value) {
+	public double compute(double value) {
 		if(value <= 0) return 0;
 		else return log2(value);
 	}	
 	
-	protected float log2(float x) {
-        return (float)(Math.log(x) / Math.log(2));
+	protected double log2(double x) {
+        return (Math.log(x) / Math.log(2));
     }
 }

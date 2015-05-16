@@ -83,10 +83,10 @@ public class DefaultDrawableGraph2d<V, E> extends AbstractDrawableGraph2d<V, E> 
 			Coord2d coord, Color color) {
 		if (gl.isGL2()) {
 			gl.getGL2().glColor4f(color.r, color.g, color.b, color.a);
-			gl.getGL2().glVertex3f(coord.x, coord.y, Z);
+			gl.getGL2().glVertex3d(coord.x, coord.y, Z);
 		} else {
 			GLES2CompatUtils.glColor4f(color.r, color.g, color.b, color.a);
-			GLES2CompatUtils.glVertex3f(coord.x, coord.y, Z);
+			GLES2CompatUtils.glVertex3f((float)coord.x, (float)coord.y, Z);
 		}
 	}
 
@@ -102,14 +102,14 @@ public class DefaultDrawableGraph2d<V, E> extends AbstractDrawableGraph2d<V, E> 
 		if (gl.isGL2()) {
 			gl.getGL2().glBegin(GL.GL_LINE_STRIP);
 			gl.getGL2().glColor4f(color.r, color.g, color.b, color.a);
-			gl.getGL2().glVertex3f(c1.x, c1.y, Z);
-			gl.getGL2().glVertex3f(c2.x, c2.y, Z);
+			gl.getGL2().glVertex3d(c1.x, c1.y, Z);
+			gl.getGL2().glVertex3d(c2.x, c2.y, Z);
 			gl.getGL2().glEnd();
 		} else {
 			GLES2CompatUtils.glBegin(GL.GL_LINE_STRIP);
 			GLES2CompatUtils.glColor4f(color.r, color.g, color.b, color.a);
-			GLES2CompatUtils.glVertex3f(c1.x, c1.y, Z);
-			GLES2CompatUtils.glVertex3f(c2.x, c2.y, Z);
+			GLES2CompatUtils.glVertex3f((float)c1.x, (float)c1.y, Z);
+			GLES2CompatUtils.glVertex3f((float)c2.x, (float)c2.y, Z);
 			GLES2CompatUtils.glEnd();
 		}
 	}

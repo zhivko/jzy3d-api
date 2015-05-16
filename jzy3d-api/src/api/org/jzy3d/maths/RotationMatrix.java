@@ -2,7 +2,7 @@ package org.jzy3d.maths;
 
 public class RotationMatrix {
     
-    public RotationMatrix(float a, Coord3d c) {
+    public RotationMatrix(double a, Coord3d c) {
         this.a = a;
         this.x = c.x;
         this.y = c.y;
@@ -10,7 +10,7 @@ public class RotationMatrix {
     }
     
     // TODO normalize x, y, z
-    public RotationMatrix(float a, float x, float y, float z) {
+    public RotationMatrix(double a, double x, double y, double z) {
         this.a = a;
         this.x = x;
         this.y = y;
@@ -18,8 +18,8 @@ public class RotationMatrix {
     }
     
     protected void prepare(){
-        c = (float)Math.cos(a);
-        s = (float)Math.sin(a);
+        c = (double)Math.cos(a);
+        s = (double)Math.sin(a);
     }
     
     public Coord3d rotate(Coord3d c){
@@ -50,13 +50,13 @@ public class RotationMatrix {
         return c;
     }
     
-    //protected float 
+    //protected double 
     
-    protected float a = 0;
-    protected float x = 0;
-    protected float y = 0;
-    protected float z = 0;
+    protected double a = 0;
+    protected double x = 0;
+    protected double y = 0;
+    protected double z = 0;
 
-    protected float c = 0;
-    protected float s = 0;
+    protected double c = 0;
+    protected double s = 0;
 }

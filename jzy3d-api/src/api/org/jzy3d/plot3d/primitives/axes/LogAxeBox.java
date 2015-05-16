@@ -44,7 +44,7 @@ public class LogAxeBox extends AxeBox {
     /*public void doTransform(GL gl) {
         if (gl.isGL2()) {
             gl.getGL2().glLoadIdentity();
-            //gl.getGL2().glScalef((float)Math.log(scale.x), scale.y, scale.z);
+            //gl.getGL2().glScalef(Math.log(scale.x), scale.y, scale.z);
             gl.getGL2().glScalef(scale.x, scale.y, scale.z);
         } else {
             GLES2CompatUtils.glLoadIdentity();
@@ -61,7 +61,7 @@ public class LogAxeBox extends AxeBox {
         for (int q = 0; q < 6; q++) {
             if (gl.isGL2()) {
                 if (mode == GL2.GL_FEEDBACK)
-                    gl.getGL2().glPassThrough((float) q);
+                    gl.getGL2().glPassThrough( q);
                 gl.getGL2().glBegin(GL2.GL_QUADS);
                 for (int v = 0; v < 4; v++) {
                     Coord3d c3d = new Coord3d(quadx[q][v], quady[q][v], quadz[q][v]); //era qua
@@ -74,7 +74,7 @@ public class LogAxeBox extends AxeBox {
                 gl.getGL2().glEnd();
             } else {
                 if (mode == GL2.GL_FEEDBACK)
-                    GLES2CompatUtils.glPassThrough((float) q);
+                    GLES2CompatUtils.glPassThrough( q);
                 GLES2CompatUtils.glBegin(GL2.GL_QUADS);
                 for (int v = 0; v < 4; v++) {
                     Coord3d c3d = new Coord3d(quadx[q][v], quady[q][v], quadz[q][v]);
@@ -143,8 +143,8 @@ public class LogAxeBox extends AxeBox {
     protected BoundingBox3d drawTicks(GL gl, GLU glu, Camera cam, int axis, int direction, Color color, Halign hal, Valign val) {
         int quad_0;
         int quad_1;
-        float tickLength = 20.0f; // with respect to range
-        float axeLabelDist = 2.5f;
+        double tickLength = 20.0f; // with respect to range
+        double axeLabelDist = 2.5f;
         BoundingBox3d ticksTxtBounds = new BoundingBox3d();
 
         // Retrieve the quads that intersect and create the selected axe
@@ -167,9 +167,9 @@ public class LogAxeBox extends AxeBox {
 
         // Computes the DIRection of the ticks
         // assuming initial vector point is the center
-        float xdir = (normx[quad_0] + normx[quad_1]) - center.x;
-        float ydir = (normy[quad_0] + normy[quad_1]) - center.y;
-        float zdir = (normz[quad_0] + normz[quad_1]) - center.z;
+        double xdir = (normx[quad_0] + normx[quad_1]) - center.x;
+        double ydir = (normy[quad_0] + normy[quad_1]) - center.y;
+        double zdir = (normz[quad_0] + normz[quad_1]) - center.z;
         xdir = xdir == 0 ? 0 : xdir / Math.abs(xdir); // so that direction as
                                                       // length 1
         ydir = ydir == 0 ? 0 : ydir / Math.abs(ydir);
@@ -206,8 +206,8 @@ public class LogAxeBox extends AxeBox {
         return ticksTxtBounds;
     }
     
-    public void drawAxisTicks(GL gl, GLU glu, Camera cam, int direction, Color color, Halign hal, Valign val, float tickLength, BoundingBox3d ticksTxtBounds, double xpos,
-            double ypos, double zpos, float xdir, float ydir, float zdir, double[] ticks) {
+    public void drawAxisTicks(GL gl, GLU glu, Camera cam, int direction, Color color, Halign hal, Valign val, double tickLength, BoundingBox3d ticksTxtBounds, double xpos,
+            double ypos, double zpos, double xdir, double ydir, double zdir, double[] ticks) {
         double xlab;
         double ylab;
         double zlab;
@@ -217,19 +217,19 @@ public class LogAxeBox extends AxeBox {
             // Shift the tick vector along the selected axis
             // and set the tick length
             if (isX(direction)) {
-                xpos = spaceTransformer.getX().compute((float) ticks[t]);
+                xpos = spaceTransformer.getX().compute( ticks[t]);
                 xlab = xpos;
                 ylab = Math.signum(tickLength * ydir) * (yrange / spaceTransformer.getY().compute(Math.abs(tickLength))) * spaceTransformer.getY().compute(Math.abs(ydir)) + ypos;
                 zlab = Math.signum(tickLength * ydir) * (zrange / spaceTransformer.getZ().compute(Math.abs(tickLength))) * spaceTransformer.getZ().compute(Math.abs(zdir)) + zpos;
                 tickLabel = layout.getXTickRenderer().format(xpos);
             } else if (isY(direction)) {
-                ypos = spaceTransformer.getY().compute((float) ticks[t]);
+                ypos = spaceTransformer.getY().compute( ticks[t]);
                 xlab = Math.signum(tickLength * xdir) * (xrange / spaceTransformer.getX().compute(Math.abs(tickLength))) * spaceTransformer.getX().compute(Math.abs(xdir)) + xpos;
                 ylab = ypos;
                 zlab = Math.signum(tickLength * zdir) * (zrange / spaceTransformer.getZ().compute(Math.abs(tickLength))) * spaceTransformer.getZ().compute(Math.abs(zdir)) + zpos;
                 tickLabel = layout.getYTickRenderer().format(ypos);
             } else { // (axis==AXE_Z)
-                zpos = spaceTransformer.getZ().compute((float) ticks[t]);
+                zpos = spaceTransformer.getZ().compute( ticks[t]);
                 xlab = Math.signum(tickLength * xdir) * (xrange / spaceTransformer.getX().compute(Math.abs(tickLength))) * spaceTransformer.getX().compute(Math.abs(xdir)) + xpos;
                 ylab = Math.signum(tickLength * ydir) * (yrange / spaceTransformer.getY().compute(Math.abs(tickLength))) * spaceTransformer.getY().compute(Math.abs(ydir)) + ypos;
                 zlab = zpos;

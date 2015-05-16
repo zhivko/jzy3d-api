@@ -122,15 +122,15 @@ public abstract class VBOBuilder implements IGLLoader<DrawableVBO> {
     }
 
     protected void putCoord(FloatVBO vbo, Coord3d c) {
-        vbo.getVertices().put(c.x);
-        vbo.getVertices().put(c.y);
-        vbo.getVertices().put(c.z);
+        vbo.getVertices().put((float)c.x);
+        vbo.getVertices().put((float)c.y);
+        vbo.getVertices().put((float)c.z);
     }
 
     protected void putCoord(FloatBuffer vertices, Coord3d c) {
-        vertices.put(c.x);
-        vertices.put(c.y);
-        vertices.put(c.z);
+        vertices.put((float)c.x);
+        vertices.put((float)c.y);
+        vertices.put((float)c.z);
     }
 
     protected void putColor(FloatVBO vbo, Color color) {

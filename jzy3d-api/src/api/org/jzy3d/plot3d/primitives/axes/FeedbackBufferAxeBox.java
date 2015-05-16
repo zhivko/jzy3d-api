@@ -32,17 +32,17 @@ public class FeedbackBufferAxeBox extends AxeBox implements IAxe{
 	 */
 	protected boolean [] getHiddenQuads(GL gl){
 		int feedbacklength = 1024;
-		FloatBuffer floatbuffer = Buffers.newDirectFloatBuffer(feedbacklength);
+		FloatBuffer doublebuffer = Buffers.newDirectFloatBuffer(feedbacklength);
 		float [] feedback = new float[feedbacklength];
 		
 		// Draw the cube into feedback buffer
-		gl.getGL2().glFeedbackBuffer(feedbacklength, GL2.GL_3D_COLOR, floatbuffer);
+		gl.getGL2().glFeedbackBuffer(feedbacklength, GL2.GL_3D_COLOR, doublebuffer);
 		gl.getGL2().glRenderMode(GL2.GL_FEEDBACK);
 		drawCube(gl, GL2.GL_FEEDBACK);
 		gl.getGL2().glRenderMode(GL2.GL_RENDER);
 		
 		// Parse feedback buffer and return hidden quads
-		floatbuffer.get(feedback);
+		doublebuffer.get(feedback);
 		return getEmptyTokens(6, feedback, feedbacklength);
 	}
 	
@@ -64,7 +64,7 @@ public class FeedbackBufferAxeBox extends AxeBox implements IAxe{
 	 * positive integer value, since this value will be used as an index in
 	 * the boolean array returned by the function
 	 * 
-	 * TODO: use a map to associate a float token to a polygon with an id?
+	 * TODO: use a map to associate a double token to a polygon with an id?
 	 * 
 	 * @throws a RuntimeException if a parsed token is either GL_BITMAP_TOKEN, GL_DRAW_PIXEL_TOKEN, or GL_COPY_PIXEL_TOKEN.
 	 */
@@ -73,20 +73,20 @@ public class FeedbackBufferAxeBox extends AxeBox implements IAxe{
 		boolean  printout = false; // for debugging parsing
 		
 		int   count = size;
-		float token_type;
-		float prevtoken_type = Float.NaN;
-		float passthrough_value = Float.NaN;
-		float prevpassthrough_value = Float.NaN;
+		double token_type;
+		double prevtoken_type = Float.NaN;
+		double passthrough_value = Float.NaN;
+		double prevpassthrough_value = Float.NaN;
 		int   prevtoken_id;
 		
-		float EMPTY_TOKEN = 0.0f;
+		double EMPTY_TOKEN = 0.0f;
 		
 		while(count>0){
 			token_type = buffer[size-count]; 
 			count--;
 			
 			// Case of a PASS THROUGH token
-            if (token_type == GL2.GL_PASS_THROUGH_TOKEN) { // can't use switch cause we have floats
+            if (token_type == GL2.GL_PASS_THROUGH_TOKEN) { // can't use switch cause we have doubles
             	passthrough_value = buffer[size - count];
             	count--;
             	
@@ -95,7 +95,7 @@ public class FeedbackBufferAxeBox extends AxeBox implements IAxe{
 
                 // If the preceding token is also a GL_PASS_THROUGH_TOKEN
                 // we consider it as an empty token
-                if(!Float.isNaN(prevpassthrough_value)){
+                if(!Double.isNaN(prevpassthrough_value)){
 	                prevtoken_id = (int)prevpassthrough_value;
 	                if( token_type == prevtoken_type )
 	            		isempty[prevtoken_id] = true;
@@ -111,7 +111,7 @@ public class FeedbackBufferAxeBox extends AxeBox implements IAxe{
             else if (token_type == GL2.GL_POINT_TOKEN) {
             	if(printout){
             		System.out.println(" GL.GL_POINT_TOKEN");
-                	count = print3DcolorVertex(size, count, buffer);
+                	count = print3DcolorVertexF(size, count, buffer);
             	}else{
             		count = count - 7;
             	}
@@ -119,8 +119,8 @@ public class FeedbackBufferAxeBox extends AxeBox implements IAxe{
             else if (token_type == GL2.GL_LINE_TOKEN) {
             	if(printout){
             		System.out.println(" GL.GL_LINE_TOKEN ");
-            		count = print3DcolorVertex(size, count, buffer);
-            		count = print3DcolorVertex(size, count, buffer);
+            		count = print3DcolorVertexF(size, count, buffer);
+            		count = print3DcolorVertexF(size, count, buffer);
             	}else{
             		count = count - 14;
             	}
@@ -128,8 +128,8 @@ public class FeedbackBufferAxeBox extends AxeBox implements IAxe{
             else if (token_type == GL2.GL_LINE_RESET_TOKEN) {
             	if(printout){
             		System.out.println(" GL.GL_LINE_RESET_TOKEN ");
-            		count = print3DcolorVertex(size, count, buffer);
-            		count = print3DcolorVertex(size, count, buffer);
+            		count = print3DcolorVertexF(size, count, buffer);
+            		count = print3DcolorVertexF(size, count, buffer);
             	}else{
             		count = count - 14;
             	}
@@ -143,7 +143,7 @@ public class FeedbackBufferAxeBox extends AxeBox implements IAxe{
             	
                 for(int i=0; i<n; i++){
                 	if(printout)
-                		count = print3DcolorVertex(size, count, buffer);
+                		count = print3DcolorVertexF(size, count, buffer);
                 	else
                 		count = count - 7;
                 }
@@ -179,8 +179,8 @@ public class FeedbackBufferAxeBox extends AxeBox implements IAxe{
 	/**
 	 *  Print out parameters of a gl call in 3dColor mode.
 	 */
-    @Override
-    protected int print3DcolorVertex(int size, int count, float[] buffer) {
+    
+    protected int print3DcolorVertexF(int size, int count, float[] buffer) {
         int i;
         int id = size - count;
         int veclength = 7;

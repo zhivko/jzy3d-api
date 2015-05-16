@@ -31,11 +31,11 @@ public class TranslucentQuad extends Quad implements ITranslucent {
 						Color c = mapper.getColor(p.xyz); // TODO: should store
 															// result in the
 															// point color
-						callWithAlphaFactor(gl, c, alpha);
+						callWithAlphaFactor(gl, c, (float)alpha);
 					} else
-						callWithAlphaFactor(gl, p.rgb, alpha);
+						callWithAlphaFactor(gl, p.rgb, (float)alpha);
 					// System.out.println(p.rgb + " alpha factor = " + alpha);
-					gl.getGL2().glVertex3f(p.xyz.x, p.xyz.y, p.xyz.z);
+					gl.getGL2().glVertex3d(p.xyz.x, p.xyz.y, p.xyz.z);
 				}
 				gl.getGL2().glEnd();
 				if (wfstatus)
@@ -49,12 +49,12 @@ public class TranslucentQuad extends Quad implements ITranslucent {
 				gl.glEnable(GL.GL_POLYGON_OFFSET_FILL);
 				gl.glPolygonOffset(1.0f, 1.0f);
 
-				callWithAlphaFactor(gl, wfcolor, alpha);
+				callWithAlphaFactor(gl, wfcolor, (float)alpha);
 				gl.glLineWidth(wfwidth);
 
 				gl.getGL2().glBegin(GL2GL3.GL_QUADS);
 				for (Point p : points) {
-					gl.getGL2().glVertex3f(p.xyz.x, p.xyz.y, p.xyz.z);
+					gl.getGL2().glVertex3d(p.xyz.x, p.xyz.y, p.xyz.z);
 				}
 				gl.getGL2().glEnd();
 
@@ -75,11 +75,11 @@ public class TranslucentQuad extends Quad implements ITranslucent {
 						Color c = mapper.getColor(p.xyz); // TODO: should store
 															// result in the
 															// point color
-						callWithAlphaFactor(gl, c, alpha);
+						callWithAlphaFactor(gl, c, (float)alpha);
 					} else
-						callWithAlphaFactor(gl, p.rgb, alpha);
+						callWithAlphaFactor(gl, p.rgb, (float)alpha);
 					// System.out.println(p.rgb + " alpha factor = " + alpha);
-					GLES2CompatUtils.glVertex3f(p.xyz.x, p.xyz.y, p.xyz.z);
+					GLES2CompatUtils.glVertex3f((float)p.xyz.x, (float)p.xyz.y, (float)p.xyz.z);
 				}
 				GLES2CompatUtils.glEnd();
 				if (wfstatus)
@@ -94,12 +94,12 @@ public class TranslucentQuad extends Quad implements ITranslucent {
 				gl.glEnable(GL.GL_POLYGON_OFFSET_FILL);
 				gl.glPolygonOffset(1.0f, 1.0f);
 
-				callWithAlphaFactor(gl, wfcolor, alpha);
+				callWithAlphaFactor(gl, wfcolor, (float)alpha);
 				gl.glLineWidth(wfwidth);
 
 				GLES2CompatUtils.glBegin(GL2GL3.GL_QUADS);
 				for (Point p : points) {
-					GLES2CompatUtils.glVertex3f(p.xyz.x, p.xyz.y, p.xyz.z);
+					GLES2CompatUtils.glVertex3f((float)p.xyz.x, (float)p.xyz.y, (float)p.xyz.z);
 				}
 				GLES2CompatUtils.glEnd();
 
@@ -110,9 +110,9 @@ public class TranslucentQuad extends Quad implements ITranslucent {
 	}
 
 	@Override
-	public void setAlphaFactor(float a) {
+	public void setAlphaFactor(double a) {
 		alpha = a;
 	}
 
-	protected float alpha = 1;
+	protected double alpha = 1;
 }

@@ -58,7 +58,7 @@ public abstract class AbstractViewportManager {
      * @throws an
      *             IllegalArgumentException if right is not greater than left.
      */
-    public void setViewPort(int width, int height, float left, float right) {
+    public void setViewPort(int width, int height, double left, double right) {
         if (left >= right)
             throw new IllegalArgumentException("left must be inferior to right : " + left + " | " + right);
 
@@ -192,29 +192,29 @@ public abstract class AbstractViewportManager {
         gl.getGL2().glColor3f(1f, 0.5f, 0.5f);
         gl.getGL2().glLineWidth(1f);
 
-        float step;
+        double step;
 
         step = (AREA_RIGHT - AREA_LEFT) / (GRID_STEPS + 0);
-        for (float i = AREA_LEFT; i <= AREA_RIGHT; i += step) {
-            float x = i;
+        for (double i = AREA_LEFT; i <= AREA_RIGHT; i += step) {
+            double x = i;
             if (x == AREA_LEFT)
                 x += OFFSET;
 
             gl.getGL2().glBegin(GL.GL_LINES);
-            gl.getGL2().glVertex3f(x, AREA_DOWN, 1);
-            gl.getGL2().glVertex3f(x, AREA_TOP, 1);
+            gl.getGL2().glVertex3d(x, AREA_DOWN, 1);
+            gl.getGL2().glVertex3d(x, AREA_TOP, 1);
             gl.getGL2().glEnd();
         }
 
         step = (AREA_TOP - AREA_DOWN) / (GRID_STEPS + 0);
-        for (float j = AREA_DOWN; j <= AREA_TOP; j += step) {
-            float y = j;
+        for (double j = AREA_DOWN; j <= AREA_TOP; j += step) {
+            double y = j;
             if (y == AREA_TOP)
                 y -= OFFSET;
 
             gl.getGL2().glBegin(GL.GL_LINES);
-            gl.getGL2().glVertex3f(AREA_LEFT, y, 1);
-            gl.getGL2().glVertex3f(AREA_RIGHT, y, 1);
+            gl.getGL2().glVertex3d(AREA_LEFT, y, 1);
+            gl.getGL2().glVertex3d(AREA_RIGHT, y, 1);
             gl.getGL2().glEnd();
         }
 
@@ -250,7 +250,7 @@ public abstract class AbstractViewportManager {
              GLES2CompatUtils.glViewport(screenXoffset, screenYoffset, dimension, dimension);
          }
 
-         GLES2CompatUtils.glOrtho(AREA_LEFT, AREA_RIGHT, AREA_DOWN, AREA_TOP, -1, 1);
+         GLES2CompatUtils.glOrtho((float)AREA_LEFT, (float)AREA_RIGHT, (float)AREA_DOWN, (float)AREA_TOP, -1, 1);
 
          // Set a grid
          GLES2CompatUtils.glMatrixMode(GLMatrixFunc.GL_MODELVIEW);
@@ -259,29 +259,29 @@ public abstract class AbstractViewportManager {
          GLES2CompatUtils.glColor3f(1f, 0.5f, 0.5f);
          GLES2CompatUtils.glLineWidth(1f);
 
-         float step;
+         double step;
 
          step = (AREA_RIGHT - AREA_LEFT) / (GRID_STEPS + 0);
-         for (float i = AREA_LEFT; i <= AREA_RIGHT; i += step) {
-             float x = i;
+         for (double i = AREA_LEFT; i <= AREA_RIGHT; i += step) {
+             double x = i;
              if (x == AREA_LEFT)
                  x += OFFSET;
 
              GLES2CompatUtils.glBegin(GL.GL_LINES);
-             GLES2CompatUtils.glVertex3f(x, AREA_DOWN, 1);
-             GLES2CompatUtils.glVertex3f(x, AREA_TOP, 1);
+             GLES2CompatUtils.glVertex3f((float)x, (float)AREA_DOWN, 1);
+             GLES2CompatUtils.glVertex3f((float)x, (float)AREA_TOP, 1);
              GLES2CompatUtils.glEnd();
          }
 
          step = (AREA_TOP - AREA_DOWN) / (GRID_STEPS + 0);
-         for (float j = AREA_DOWN; j <= AREA_TOP; j += step) {
-             float y = j;
+         for (double j = AREA_DOWN; j <= AREA_TOP; j += step) {
+             double y = j;
              if (y == AREA_TOP)
                  y -= OFFSET;
 
              GLES2CompatUtils.glBegin(GL.GL_LINES);
-             GLES2CompatUtils.glVertex3f(AREA_LEFT, y, 1);
-             GLES2CompatUtils.glVertex3f(AREA_RIGHT, y, 1);
+             GLES2CompatUtils.glVertex3f((float)AREA_LEFT, (float)y, 1);
+             GLES2CompatUtils.glVertex3f((float)AREA_RIGHT, (float)y, 1);
              GLES2CompatUtils.glEnd();
          }
 
@@ -291,12 +291,12 @@ public abstract class AbstractViewportManager {
          GLES2CompatUtils.glPopMatrix();
 	}
 
-	private static final float AREA_LEFT = -100;
-    private static final float AREA_RIGHT = +100;
-    private static final float AREA_TOP = +100;
-    private static final float AREA_DOWN = -100;
-    private static final float GRID_STEPS = 10;
-    private static final float OFFSET = 0.1f;
+	private static final double AREA_LEFT = -100;
+    private static final double AREA_RIGHT = +100;
+    private static final double AREA_TOP = +100;
+    private static final double AREA_DOWN = -100;
+    private static final double GRID_STEPS = 10;
+    private static final double OFFSET = 0.1f;
 
     /********************************************************************************/
 
@@ -311,7 +311,7 @@ public abstract class AbstractViewportManager {
     protected boolean screenGridDisplayed = false;
     protected ViewportMode mode = ViewportMode.RECTANGLE_NO_STRETCH;
 
-    protected float ratioWidth;
-    protected float ratioHeight;
+    protected double ratioWidth;
+    protected double ratioHeight;
 
 }

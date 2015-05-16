@@ -16,8 +16,8 @@ public class PolygonProjection implements IProjection{
 	}
 
 	@Override
-	public float deapness() {
-		float dist = 1;
+	public double deapness() {
+		double dist = 1;
 		for(Coord3d c: coords){
 			if(c.z<dist)
 				dist = c.z;

@@ -2,7 +2,7 @@ package org.jzy3d.maths;
 
 /** For some naming relevance, a simple extention of Scale.*/
 public class Range extends Scale {
-	public Range(float min, float max){
+	public Range(double min, double max){
 		super(min, max);
 	}
 	

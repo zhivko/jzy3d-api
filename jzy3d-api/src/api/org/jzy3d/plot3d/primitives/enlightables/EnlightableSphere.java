@@ -35,7 +35,7 @@ public class EnlightableSphere extends AbstractEnlightable implements
 	}
 
 	/** Initialize a sphere with the given parameters. */
-	public EnlightableSphere(Coord3d position, float radius, int slicing,
+	public EnlightableSphere(Coord3d position, double radius, int slicing,
 			Color color) {
 		super();
 		bbox = new BoundingBox3d();
@@ -52,9 +52,9 @@ public class EnlightableSphere extends AbstractEnlightable implements
 		doTransform(gl, glu, cam);
 
 		if (gl.isGL2()) {
-			gl.getGL2().glTranslatef(x, y, z);
+			gl.getGL2().glTranslated(x, y, z);
 		} else {
-			GLES2CompatUtils.glTranslatef(x, y, z);
+			GLES2CompatUtils.glTranslatef((float)x, (float)y, (float)z);
 		}
 
 		applyMaterial(gl); // TODO: shall we avoid calling this @ each draw?
@@ -127,7 +127,7 @@ public class EnlightableSphere extends AbstractEnlightable implements
 	 * @param stacks
 	 *            number of horizontal stacks (i.e. wireframes)
 	 */
-	public void setData(Coord3d position, float radius, float height,
+	public void setData(Coord3d position, double radius, double height,
 			int slices, int stacks) {
 		setPosition(position);
 		setVolume(radius);
@@ -163,7 +163,7 @@ public class EnlightableSphere extends AbstractEnlightable implements
 	 * @param radius
 	 *            sphere radius
 	 */
-	public void setVolume(float radius) {
+	public void setVolume(double radius) {
 		this.radius = radius;
 
 		bbox.reset();
@@ -211,10 +211,10 @@ public class EnlightableSphere extends AbstractEnlightable implements
 
 	/********************************************************/
 
-	private float x;
-	private float y;
-	private float z;
-	private float radius;
+	private double x;
+	private double y;
+	private double z;
+	private double radius;
 
 	private int slices;
 	private int stacks;

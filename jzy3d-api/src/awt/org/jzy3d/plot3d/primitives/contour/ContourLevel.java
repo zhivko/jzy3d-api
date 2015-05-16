@@ -61,7 +61,7 @@ public class ContourLevel extends AbstractComposite {
 		updateComponents();
 	}
 
-	public void fixZ(float value) {
+	public void fixZ(double value) {
 		for (AbstractDrawable d : components) {
 			LineStrip line = (LineStrip) d;
 			for (Point point : line.getPoints()) {

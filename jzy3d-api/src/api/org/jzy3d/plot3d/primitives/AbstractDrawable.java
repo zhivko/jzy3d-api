@@ -99,9 +99,9 @@ public abstract class AbstractDrawable implements IGLRenderer, ISortableDraw {
      */
     protected void vertexGL2(GL gl, Coord3d c) {
         if (spaceTransformer == null) {
-            gl.getGL2().glVertex3f(c.x, c.y, c.z);
+            gl.getGL2().glVertex3d(c.x, c.y, c.z);
         } else {
-            gl.getGL2().glVertex3f(spaceTransformer.getX().compute(c.x), spaceTransformer.getY().compute(c.y), spaceTransformer.getZ().compute(c.z));
+            gl.getGL2().glVertex3d(spaceTransformer.getX().compute(c.x), spaceTransformer.getY().compute(c.y), spaceTransformer.getZ().compute(c.z));
         }
     }
 
@@ -111,10 +111,10 @@ public abstract class AbstractDrawable implements IGLRenderer, ISortableDraw {
      */
     protected void vertexGLES2(Coord3d c) {
         if(spaceTransformer==null){
-            GLES2CompatUtils.glVertex3f(c.x, c.y, c.z);            
+            GLES2CompatUtils.glVertex3f((float)c.x, (float)c.y, (float)c.z);            
         }
         else{
-            GLES2CompatUtils.glVertex3f(spaceTransformer.getX().compute(c.x), spaceTransformer.getY().compute(c.y),spaceTransformer.getZ().compute(c.z));
+            GLES2CompatUtils.glVertex3f((float)spaceTransformer.getX().compute(c.x), (float)spaceTransformer.getY().compute(c.y),(float)spaceTransformer.getZ().compute(c.z));
         }
     }
 

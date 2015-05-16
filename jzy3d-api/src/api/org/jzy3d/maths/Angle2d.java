@@ -7,7 +7,7 @@ package org.jzy3d.maths;
 public class Angle2d {
 	
 	/** Create an angle, described by three points.*/
-	public Angle2d(float x1, float y1, float z1, float x2, float y2, float z2, float x3, float y3, float z3){
+	public Angle2d(double x1, double y1, double z1, double x2, double y2, double z2, double x3, double y3, double z3){
 		this.x1 = x1;
 		this.x2 = x2;
 		this.x3 = x3;
@@ -30,10 +30,10 @@ public class Angle2d {
 
 	/** Computes the sinus of the angle, by creating a fourth point
 	 * on an orthogonal direction.*/
-	public float sin(){
-		float x4 = 0;//(y1-y2)*(z3-z2) - (z1-z2)*(y3-y2);
-		float y4 = 0;//(z1-z2)*(x3-x2) - (x1-x2)*(z3-z2);
-		float z4 = (x1-x2)*(y3-y2) - (y1-y2)*(x3-x2);
+	public double sin(){
+		double x4 = 0;//(y1-y2)*(z3-z2) - (z1-z2)*(y3-y2);
+		double y4 = 0;//(z1-z2)*(x3-x2) - (x1-x2)*(z3-z2);
+		double z4 = (x1-x2)*(y3-y2) - (y1-y2)*(x3-x2);
 		
 		Vector3d v1 = new Vector3d(x1, y1, 0, x2, y2, 0);
 		Vector3d v3 = new Vector3d(x3, y3, 0, x2, y2, 0);
@@ -43,28 +43,28 @@ public class Angle2d {
 	}
 
 	/** Computes cosinus of the angle*/
-	public float cos(){
+	public double cos(){
 		Vector2d v1 = new Vector2d(x1, y1, x2, y2);
 		Vector2d v3 = new Vector2d(x3, y3, x2, y2);
 		return v1.dot(v3) / (v1.norm()*v3.norm());
 	}
 	
 	/** Computes the angle at vertex p2 between vectors p1,p2 and p3,p2. Returns 0 to PI radians.*/
-	public float angle(){
+	public double angle(){
 		double lenP1P3 = Math.sqrt(Math.pow(x1 - x3, 2) + Math.pow(y1 - y3, 2));
 		double lenP1P2 = Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
 		double lenP3P2 = Math.sqrt(Math.pow(x3 - x2, 2) + Math.pow(y3 - y2, 2));
 		double numerator = Math.pow(lenP1P2, 2) + Math.pow(lenP3P2, 2) - Math.pow(lenP1P3, 2);
 		double denominator = 2 * lenP1P2 * lenP3P2;
-		return (float)Math.acos(numerator / denominator);
+		return (double)Math.acos(numerator / denominator);
 	}
 	
 	/***********************************************************/
 	
-	private float x1;
-	private float x2;
-	private float x3;
-	private float y1;
-	private float y2;
-	private float y3;
+	private double x1;
+	private double x2;
+	private double x3;
+	private double y1;
+	private double y2;
+	private double y3;
 }

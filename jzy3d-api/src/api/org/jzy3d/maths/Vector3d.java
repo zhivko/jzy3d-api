@@ -8,7 +8,7 @@ package org.jzy3d.maths;
 public class Vector3d {
 
 	/** Create a vector, described by two points.*/
-	public Vector3d(float x1, float y1, float z1, float x2, float y2, float z2){
+	public Vector3d(double x1, double y1, double z1, double x2, double y2, double z2){
 		this.x1 = x1;
 		this.x2 = x2;
 		this.y1 = y1;
@@ -47,7 +47,7 @@ public class Vector3d {
 	 * @param v input vector
 	 * @return the dot product
 	 */
-	public float dot(Vector3d v){
+	public double dot(Vector3d v){
 		Coord3d v1 = vector();
 		Coord3d v2 = v.vector();
 		return v1.x*v2.x + v1.y*v2.y + v1.z*v2.z;
@@ -72,8 +72,8 @@ public class Vector3d {
 	 * Compute the norm of this vector.
 	 * @return the norm
 	 */
-	public float norm(){
-		return (float)Math.sqrt( Math.pow(x2-x1,2) + Math.pow(y2-y1,2) + Math.pow(z2-z1,2) );
+	public double norm(){
+		return Math.sqrt( Math.pow(x2-x1,2) + Math.pow(y2-y1,2) + Math.pow(z2-z1,2) );
 	}
 		
 	/***********************************************************/
@@ -85,18 +85,18 @@ public class Vector3d {
 	
 	/**Return the central point of this segment.*/
 	public Coord3d getCenter(){
-		float cx  = (x1+x2)/2;
-		float cy  = (y1+y2)/2;
-		float cz  = (z1+z2)/2;	
+		double cx  = (x1+x2)/2;
+		double cy  = (y1+y2)/2;
+		double cz  = (z1+z2)/2;	
 		return new Coord3d(cx, cy, cz);
 	}
 		
 	/***********************************************************/
 	
-	private float x1;
-	private float x2;
-	private float y1;
-	private float y2;
-	private float z1;
-	private float z2;
+	private double x1;
+	private double x2;
+	private double y1;
+	private double y2;
+	private double z1;
+	private double z2;
 }

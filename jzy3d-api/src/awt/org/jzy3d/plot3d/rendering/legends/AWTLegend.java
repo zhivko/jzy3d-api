@@ -64,7 +64,7 @@ public abstract class AWTLegend extends AWTImageViewport implements IDrawableLis
      * the viewport dimension have changed
      */
     @Override
-    public void setViewPort(int width, int height, float left, float right) {
+    public void setViewPort(int width, int height, double left, double right) {
         super.setViewPort(width, height, left, right);
 
         int imgWidth = (int) (width * (right - left));

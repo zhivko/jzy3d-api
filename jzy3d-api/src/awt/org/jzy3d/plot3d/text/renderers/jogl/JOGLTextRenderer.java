@@ -32,7 +32,7 @@ public class JOGLTextRenderer extends AbstractTextRenderer implements ITextRende
 	@Override
 	public void drawSimpleText(GL gl, GLU glu, Camera cam, String s, Coord3d position, Color color) {
 		renderer.begin3DRendering();
-		renderer.draw3D(s, position.x, position.y, position.z, 0.01f);
+		renderer.draw3D(s, (float)position.x, (float)position.y, (float)position.z, 0.01f);
 		renderer.flush();
 		renderer.end3DRendering();
 	}
@@ -46,7 +46,7 @@ public class JOGLTextRenderer extends AbstractTextRenderer implements ITextRende
 			Rectangle2D d = style.getBounds(s, font, renderer.getFontRenderContext());
 			//System.out.println(d);
 			Coord3d left2d = cam.modelToScreen(gl, glu, position);
-			Coord2d right2d = new Coord2d(left2d.x+(float)d.getWidth(), left2d.y+(float)d.getHeight());
+			Coord2d right2d = new Coord2d(left2d.x+(double)d.getWidth(), left2d.y+(double)d.getHeight());
 			Coord3d right3d = cam.screenToModel(gl, glu, new Coord3d(right2d,0));
 			Coord3d offset3d = right3d.sub(position).div(2);//.mul(0.1f);
 			Coord3d real = position.add(sceneOffset).sub(offset3d);
@@ -55,11 +55,11 @@ public class JOGLTextRenderer extends AbstractTextRenderer implements ITextRende
 			//System.out.println("left3d=" + left2d);
 			System.out.println("right3d=" + right3d);
 			System.out.println("offset3d=" + offset3d);*/
-			renderer.draw3D(s, real.x, real.y, real.z, 1);//0.005f);
+			renderer.draw3D(s, (float)real.x, (float)real.y, (float)real.z, 1);//0.005f);
 		}
 		else{
 			Coord3d real = position.add(sceneOffset);
-			renderer.draw3D(s, real.x, real.y, real.z, 1);//0.005f);
+			renderer.draw3D(s, (float)real.x, (float)real.y, (float)real.z, 1);//0.005f);
 		}
 		renderer.flush();
 		renderer.end3DRendering();

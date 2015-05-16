@@ -37,7 +37,7 @@ public class BoundingBox3d {
             add(c);
     }
 
-    public BoundingBox3d(Coord3d center, float edgeLength) {
+    public BoundingBox3d(Coord3d center, double edgeLength) {
         this.xmin = center.x - edgeLength / 2;
         this.xmax = center.x + edgeLength / 2;
         this.ymin = center.y - edgeLength / 2;
@@ -56,7 +56,7 @@ public class BoundingBox3d {
     }
 
     /** Initialize a BoundingBox with raw values. */
-    public BoundingBox3d(float xmin, float xmax, float ymin, float ymax, float zmin, float zmax) {
+    public BoundingBox3d(double xmin, double xmax, double ymin, double ymax, double zmin, double zmax) {
         this.xmin = xmin;
         this.xmax = xmax;
         this.ymin = ymin;
@@ -105,7 +105,7 @@ public class BoundingBox3d {
      * @param y
      * @param z
      */
-    public void add(float x, float y, float z) {
+    public void add(double x, double y, double z) {
         if (x > xmax)
             xmax = x;
         if (x < xmin)
@@ -238,7 +238,7 @@ public class BoundingBox3d {
 
     /*********************************************************/
 
-    public BoundingBox3d margin(float margin) {
+    public BoundingBox3d margin(double margin) {
         BoundingBox3d b = new BoundingBox3d();
         b.xmax = xmax + margin;
         b.xmin = xmin + margin;
@@ -249,7 +249,7 @@ public class BoundingBox3d {
         return b;
     }
 
-    public BoundingBox3d selfMargin(float margin) {
+    public BoundingBox3d selfMargin(double margin) {
         xmax += margin;
         xmin -= margin;
         ymax += margin;
@@ -273,51 +273,51 @@ public class BoundingBox3d {
         return new Range(zmin, zmax);
     }
 
-    public float getXmin() {
+    public double getXmin() {
         return xmin;
     }
 
-    public void setXmin(float value) {
+    public void setXmin(double value) {
         xmin = value;
     }
 
-    public float getXmax() {
+    public double getXmax() {
         return xmax;
     }
 
-    public void setXmax(float value) {
+    public void setXmax(double value) {
         xmax = value;
     }
 
-    public float getYmin() {
+    public double getYmin() {
         return ymin;
     }
 
-    public void setYmin(float value) {
+    public void setYmin(double value) {
         ymin = value;
     }
 
-    public float getYmax() {
+    public double getYmax() {
         return ymax;
     }
 
-    public void setYmax(float value) {
+    public void setYmax(double value) {
         ymax = value;
     }
 
-    public float getZmin() {
+    public double getZmin() {
         return zmin;
     }
 
-    public void setZmin(float value) {
+    public void setZmin(double value) {
         zmin = value;
     }
 
-    public float getZmax() {
+    public double getZmax() {
         return zmax;
     }
 
-    public void setZmax(float value) {
+    public void setZmax(double value) {
         zmax = value;
     }
 
@@ -357,12 +357,12 @@ public class BoundingBox3d {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + Float.floatToIntBits(xmax);
-        result = prime * result + Float.floatToIntBits(xmin);
-        result = prime * result + Float.floatToIntBits(ymax);
-        result = prime * result + Float.floatToIntBits(ymin);
-        result = prime * result + Float.floatToIntBits(zmax);
-        result = prime * result + Float.floatToIntBits(zmin);
+        result = prime * result + (int)Double.doubleToLongBits(xmax);
+        result = prime * result + (int)Double.doubleToLongBits(xmin);
+        result = prime * result + (int)Double.doubleToLongBits(ymax);
+        result = prime * result + (int)Double.doubleToLongBits(ymin);
+        result = prime * result + (int)Double.doubleToLongBits(zmax);
+        result = prime * result + (int)Double.doubleToLongBits(zmin);
         return result;
     }
 
@@ -376,19 +376,19 @@ public class BoundingBox3d {
             return false;
 
         BoundingBox3d other = (BoundingBox3d) obj;
-        if (Float.floatToIntBits(xmax) != Float.floatToIntBits(other.xmax))
+        
+        if (xmax != other.xmax)
             return false;
-        if (Float.floatToIntBits(xmin) != Float.floatToIntBits(other.xmin))
+        if (xmin != other.xmin)
             return false;
-        if (Float.floatToIntBits(ymax) != Float.floatToIntBits(other.ymax))
+        if (ymax != other.ymax)
             return false;
-        if (Float.floatToIntBits(ymin) != Float.floatToIntBits(other.ymin))
+        if (ymin != other.ymin)
             return false;
-        if (Float.floatToIntBits(zmax) != Float.floatToIntBits(other.zmax))
+        if (zmax != other.zmax)
             return false;
-        if (Float.floatToIntBits(zmin) != Float.floatToIntBits(other.zmin))
+        if (zmin != other.zmin)
             return false;
-
         return true;
     }
 
@@ -399,11 +399,11 @@ public class BoundingBox3d {
     
     /* */
     
-    private float xmin;
-    private float xmax;
-    private float ymin;
-    private float ymax;
-    private float zmin;
-    private float zmax;
+    private double xmin;
+    private double xmax;
+    private double ymin;
+    private double ymax;
+    private double zmin;
+    private double zmax;
 
 }

@@ -24,7 +24,7 @@ public class BoundingBox2d {
 	}
 	
 	/** Initialize a BoundingBox with raw values.*/
-	public BoundingBox2d(float xmin, float xmax, float ymin, float ymax){
+	public BoundingBox2d(double xmin, double xmax, double ymin, double ymax){
 		this.xmin = xmin;
 		this.xmax = xmax;
 		this.ymin = ymin;
@@ -51,7 +51,7 @@ public class BoundingBox2d {
 	 * @param x
 	 * @param y
 	 */
-	public void add(float x, float y){
+	public void add(double x, double y){
 		if(x>xmax) xmax = x;
 		if(x<xmin) xmin = x;
 		if(y>ymax) ymax = y;
@@ -139,7 +139,7 @@ public class BoundingBox2d {
 	 * Return the minimum x value.
 	 * @return
 	 */
-	public float xmin(){
+	public double xmin(){
 		return xmin;
 	}
 	
@@ -147,14 +147,14 @@ public class BoundingBox2d {
 	 * Return the maximum x value.
 	 * @return
 	 */
-	public float xmax(){
+	public double xmax(){
 		return xmax;
 	}
 	/**
 	 * Return the minimum y value.
 	 * @return
 	 */
-	public float ymin(){
+	public double ymin(){
 		return ymin;
 	}
 	
@@ -162,7 +162,7 @@ public class BoundingBox2d {
 	 * Return the maximum y value.
 	 * @return
 	 */
-	public float ymax(){
+	public double ymax(){
 		return ymax;
 	}
 		
@@ -179,8 +179,8 @@ public class BoundingBox2d {
 	
 	/*********************************************************/
 		
-	private float xmin;
-	private float xmax;
-	private float ymin;
-	private float ymax;
+	private double xmin;
+	private double xmax;
+	private double ymin;
+	private double ymax;
 }

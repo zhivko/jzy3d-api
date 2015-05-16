@@ -79,7 +79,7 @@ public class TexturedCylinder extends AbstractComposite implements Selectable, I
 	}
 	
 	@Override
-	public void setAlphaFactor(float a) {
+	public void setAlphaFactor(double a) {
 		alpha = a;
 		
 		((DrawableTexture)dDiskDown).setAlphaFactor( alpha );
@@ -120,5 +120,5 @@ public class TexturedCylinder extends AbstractComposite implements Selectable, I
 	
 	protected List<Coord3d> lastProjection;
 	protected Polygon2d lastHull;
-	protected float alpha;
+	protected double alpha;
 }

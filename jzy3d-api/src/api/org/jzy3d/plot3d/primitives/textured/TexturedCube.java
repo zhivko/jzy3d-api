@@ -102,7 +102,7 @@ public class TexturedCube extends AbstractComposite implements Selectable, ITran
 	}
 	
 	@Override
-	public void setAlphaFactor(float a) {
+	public void setAlphaFactor(double a) {
 		alpha = a;
 		
 		((DrawableTexture)northBg).setAlphaFactor( alpha );
@@ -137,5 +137,5 @@ public class TexturedCube extends AbstractComposite implements Selectable, ITran
 	protected List<Coord3d> lastProjection;
 	protected Polygon2d lastHull;
 	
-	protected float alpha;
+	protected double alpha;
 }

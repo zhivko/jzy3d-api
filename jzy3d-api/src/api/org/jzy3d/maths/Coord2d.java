@@ -25,16 +25,9 @@ public class Coord2d implements Serializable{
 	
 	/** Creates a 2d coordinate.
 	 * When using polar mode, x represents angle, and y represents distance.*/
-	public Coord2d(float xi, float yi){
+	public Coord2d(double xi, double yi){
 		x = xi;
 		y = yi;
-	}
-	
-	/** Creates a 2d coordinate.
-	 * When using polar mode, x represents angle, and y represents distance.*/
-	public Coord2d(double xi, double yi){
-		x = (float)xi;
-		y = (float)yi;
 	}
 	
 	/** Return a duplicate of this 3d coordinate.*/
@@ -48,7 +41,7 @@ public class Coord2d implements Serializable{
 		this.y = c.y;
 	}
 
-	public void set(float x, float y){
+	public void set(double x, double y){
 		this.x = x;
 		this.y = y;
 	}
@@ -67,16 +60,16 @@ public class Coord2d implements Serializable{
 		y+=c2.y;		
 	}
 	
-	public void addSelf(float x, float y){
+	public void addSelf(double x, double y){
         this.x+=x;
         this.y+=y;      
     }
 
-	public void addSelfX(float x){
+	public void addSelfX(double x){
         this.x+=x;
     }
 
-	public void addSelfY(float y){
+	public void addSelfY(double y){
         this.y+=y;      
     }
 
@@ -85,11 +78,11 @@ public class Coord2d implements Serializable{
 	 * @param value
 	 * @return the result Coord2d
 	 */
-	public Coord2d add(float value){
+	public Coord2d add(double value){
 		return new Coord2d(x+value, y+value);		
 	}
 	
-	public Coord2d add(float x, float y){
+	public Coord2d add(double x, double y){
 		return new Coord2d(this.x+x, this.y+y);		
 	}
 	
@@ -107,11 +100,11 @@ public class Coord2d implements Serializable{
 	 * @param value
 	 * @return the result Coord2d
 	 */
-	public Coord2d sub(float value){
+	public Coord2d sub(double value){
 		return new Coord2d(x-value, y-value);		
 	}
 	
-	public Coord2d sub(float x, float y){
+	public Coord2d sub(double x, double y){
 		return new Coord2d(this.x-x, this.y-y);		
 	}
 	
@@ -124,7 +117,7 @@ public class Coord2d implements Serializable{
 		return new Coord2d(x*c2.x, y*c2.y);		
 	}
 
-	public Coord2d mul(float x, float y){
+	public Coord2d mul(double x, double y){
 		return new Coord2d(this.x*x, this.y*y);		
 	}
 
@@ -133,7 +126,7 @@ public class Coord2d implements Serializable{
 	 * @param value
 	 * @return the result Coord3d
 	 */
-	public Coord2d mul(float value){
+	public Coord2d mul(double value){
 		return new Coord2d(x*value, y*value);		
 	}
 	
@@ -151,15 +144,15 @@ public class Coord2d implements Serializable{
 	 * @param value
 	 * @return the result Coord3d
 	 */
-	public Coord2d div(float value){
+	public Coord2d div(double value){
 		return new Coord2d(x/value, y/value);		
 	}
 
-	public Coord2d div(float x, float y){
+	public Coord2d div(double x, double y){
 		return new Coord2d(this.x/x, this.y/y);		
 	}
 	
-	public void divSelf(float value){
+	public void divSelf(double value){
         x/=value;
         y/=value;       
     }
@@ -225,10 +218,10 @@ public class Coord2d implements Serializable{
 	 * 
 	 * A value of 1 will return a copy of the current point.
 	 */
-	public Coord2d interpolation(Coord2d c, float ratio){
-	    float inv = 1-ratio;
-	    float xx = x*ratio+c.x*inv;
-        float yy = y*ratio+c.y*inv;
+	public Coord2d interpolation(Coord2d c, double ratio){
+	    double inv = 1-ratio;
+	    double xx = x*ratio+c.x*inv;
+        double yy = y*ratio+c.y*inv;
 	    return new Coord2d(xx,yy);
 	}
 
@@ -239,21 +232,21 @@ public class Coord2d implements Serializable{
 	}
 	
 	/** Return an array representation of this coordinate.*/
-	public float[] toArray(){
-		float[] array = new float[2];
+	public double[] toArray(){
+		double[] array = new double[2];
 		array[0] = x;
 		array[1] = y;
 		
 		return array;
 	}
 	
-	public float getX(){
+	public double getX(){
 	    return x;
 	}
-    public float getY(){
+    public double getY(){
         return y;
     }
 	
-	public float x;
-	public float y;
+	public double x;
+	public double y;
 }

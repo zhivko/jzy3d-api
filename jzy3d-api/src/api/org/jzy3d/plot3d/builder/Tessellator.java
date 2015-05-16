@@ -16,5 +16,5 @@ public abstract class Tessellator {
 		return build(coords.getX(), coords.getY(), coords.getZ());
 	}
 
-	public abstract AbstractComposite build(float[] x, float[] y, float[] z);
+	public abstract AbstractComposite build(double[] x, double[] y, double[] z);
 }

@@ -33,14 +33,14 @@ public class SelectableSphere extends Sphere implements Selectable {
 			gl.getGL2().glColor4f(Color.RED.r, Color.RED.g, Color.RED.b,
 					Color.RED.a);
 			for (Coord3d a : anchors)
-				gl.getGL2().glVertex3f(a.x, a.y, a.z);
+				gl.getGL2().glVertex3d(a.x, a.y, a.z);
 			gl.getGL2().glEnd();
 		} else {
 			GLES2CompatUtils.glBegin(GL.GL_POINTS);
 			GLES2CompatUtils.glColor4f(Color.RED.r, Color.RED.g, Color.RED.b,
 					Color.RED.a);
 			for (Coord3d a : anchors)
-				GLES2CompatUtils.glVertex3f(a.x, a.y, a.z);
+				GLES2CompatUtils.glVertex3f((float)a.x, (float)a.y, (float)a.z);
 			GLES2CompatUtils.glEnd();
 		}
 

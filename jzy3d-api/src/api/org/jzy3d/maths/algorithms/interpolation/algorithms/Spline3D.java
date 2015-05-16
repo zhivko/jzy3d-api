@@ -41,7 +41,7 @@ import org.jzy3d.maths.Coord3d;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Spline3D {
 
-    public static final float DEFAULT_TIGHTNESS = 0.25f;
+    public static final double DEFAULT_TIGHTNESS = 0.25f;
 
     @XmlElement
     protected Coord3d[] points;
@@ -62,13 +62,13 @@ public class Spline3D {
     public Coord3d[] coeffA;
 
     @XmlTransient
-    public float[] bi;
+    public double[] bi;
 
     @XmlAttribute
-    protected float tightness;
+    protected double tightness;
 
     @XmlTransient
-    protected float invTightness;
+    protected double invTightness;
 
     @XmlTransient
     protected int numP;
@@ -96,9 +96,9 @@ public class Spline3D {
      *            predefined Bernstein polynomial (good for reusing)
      * @param tightness
      *            default curve tightness used for the interpolated vertices
-     *            {@linkplain #setTightness(float)}
+     *            {@linkplain #setTightness(double)}
      */
-    public Spline3D(List<Coord3d> rawPoints, BernsteinPolynomial b, float tightness) {
+    public Spline3D(List<Coord3d> rawPoints, BernsteinPolynomial b, double tightness) {
         pointList.addAll(rawPoints);
         bernstein = b;
         setTightness(tightness);
@@ -115,13 +115,13 @@ public class Spline3D {
      *            predefined Bernstein polynomial (good for reusing)
      * @param tightness
      *            default curve tightness used for the interpolated vertices
-     *            {@linkplain #setTightness(float)}
+     *            {@linkplain #setTightness(double)}
      */
-    public Spline3D(Coord3d[] pointArray, BernsteinPolynomial b, float tightness) {
+    public Spline3D(Coord3d[] pointArray, BernsteinPolynomial b, double tightness) {
         this(Arrays.asList(pointArray), b, tightness);
     }
 
-    public Spline3D add(float x, float y, float z) {
+    public Spline3D add(double x, double y, double z) {
         return add(new Coord3d(x, y, z));
     }
 
@@ -149,7 +149,7 @@ public class Spline3D {
      * </p>
      * <p>
      * Since version 0014 the automatic placement of the curve handles can also
-     * be manipulated via the {@linkplain #setTightness(float)} method.
+     * be manipulated via the {@linkplain #setTightness(double)} method.
      * </p>
      * 
      * @param res
@@ -179,9 +179,9 @@ public class Spline3D {
             deltaP.set(delta[i]).addSelf(p);
             deltaQ.set(q).subSelf(delta[i + 1]);
             for (int k = 0; k < res; k++) {
-                float x = p.x * bernstein.b0[k] + deltaP.x * bernstein.b1[k] + deltaQ.x * bernstein.b2[k] + q.x * bernstein.b3[k];
-                float y = p.y * bernstein.b0[k] + deltaP.y * bernstein.b1[k] + deltaQ.y * bernstein.b2[k] + q.y * bernstein.b3[k];
-                float z = p.z * bernstein.b0[k] + deltaP.z * bernstein.b1[k] + deltaQ.z * bernstein.b2[k] + q.z * bernstein.b3[k];
+                double x = p.x * bernstein.b0[k] + deltaP.x * bernstein.b1[k] + deltaQ.x * bernstein.b2[k] + q.x * bernstein.b3[k];
+                double y = p.y * bernstein.b0[k] + deltaP.y * bernstein.b1[k] + deltaQ.y * bernstein.b2[k] + q.y * bernstein.b3[k];
+                double z = p.z * bernstein.b0[k] + deltaP.z * bernstein.b1[k] + deltaQ.z * bernstein.b2[k] + q.z * bernstein.b3[k];
                 vertices.add(new Coord3d(x, y, z));
             }
         }
@@ -201,11 +201,11 @@ public class Spline3D {
         }
     }
 
-    public List<Coord3d> getDecimatedVertices(float step) {
+    public List<Coord3d> getDecimatedVertices(double step) {
         List<Coord3d> steps = new ArrayList<Coord3d>();
         int num = vertices.size();
         int i = 0;
-        float segLen;
+        double segLen;
         Coord3d a = null;
         Coord3d b = vertices.get(0);
         Coord3d curr = b.clone();
@@ -243,11 +243,11 @@ public class Spline3D {
     }
 
     /**
-     * @see #setTightness(float)
+     * @see #setTightness(double)
      * @return the spline3d tightness
      * @since 0014 (rev.216)
      */
-    public float getTightness() {
+    public double getTightness() {
         return tightness;
     }
 
@@ -275,7 +275,7 @@ public class Spline3D {
      *            {@link #computeVertices(int)}
      * @since 0014 (rev. 216)
      */
-    public Spline3D setTightness(float tightness) {
+    public Spline3D setTightness(double tightness) {
         this.tightness = tightness;
         this.invTightness = 1f / tightness;
         return this;
@@ -286,7 +286,7 @@ public class Spline3D {
         if (points == null || (points != null && points.length != numP)) {
             coeffA = new Coord3d[numP];
             delta = new Coord3d[numP];
-            bi = new float[numP];
+            bi = new double[numP];
             for (int i = 0; i < numP; i++) {
                 coeffA[i] = new Coord3d();
                 delta[i] = new Coord3d();

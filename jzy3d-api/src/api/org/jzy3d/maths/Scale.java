@@ -2,7 +2,7 @@ package org.jzy3d.maths;
 
 public class Scale {
 
-    public Scale(float min, float max) {
+    public Scale(double min, double max) {
         this.min = min;
         this.max = max;
     }
@@ -12,31 +12,31 @@ public class Scale {
         return new Scale(min, max);
     }
 
-    public float getMin() {
+    public double getMin() {
         return min;
     }
 
-    public float getMax() {
+    public double getMax() {
         return max;
     }
 
-    public float getRange() {
+    public double getRange() {
         return max - min;
     }
 
-    public void setMin(float min) {
+    public void setMin(double min) {
         this.min = min;
     }
 
-    public void setMax(float max) {
+    public void setMax(double max) {
         this.max = max;
     }
 
-    public Scale add(float value) {
+    public Scale add(double value) {
         return new Scale(min + value, max + value);
     }
 
-    public boolean contains(float value) {
+    public boolean contains(double value) {
         if (min <= value && value <= max)
             return true;
         else
@@ -51,11 +51,11 @@ public class Scale {
         return Double.isNaN(min);
     }
     
-    public boolean isIn(float value){
+    public boolean isIn(double value){
         return isIn(value, false, true);
     }
 
-    public boolean isIn(float value, boolean includingMin, boolean includingMax){
+    public boolean isIn(double value, boolean includingMin, boolean includingMax){
         if(includingMin?value<min:value<=min)
             return false;
         if(includingMax?value>max:value>=max)
@@ -73,21 +73,21 @@ public class Scale {
     /* */
 
     public static Scale widest(Scale scale1, Scale scale2) {
-        float min = Math.min(scale1.min, scale2.min);
-        float max = Math.max(scale1.max, scale2.max);
+        double min = Math.min(scale1.min, scale2.min);
+        double max = Math.max(scale1.max, scale2.max);
 
         return new Scale(min, max);
     }
 
     public static Scale thinest(Scale scale1, Scale scale2) {
-        float min = Math.max(scale1.min, scale2.min);
-        float max = Math.min(scale1.max, scale2.max);
+        double min = Math.max(scale1.min, scale2.min);
+        double max = Math.min(scale1.max, scale2.max);
 
         return new Scale(min, max);
     }
 
-    public static Scale enlarge(Scale input, float ratio) {
-        float offset = (input.getMax() - input.getMin()) * ratio;
+    public static Scale enlarge(Scale input, double ratio) {
+        double offset = (input.getMax() - input.getMin()) * ratio;
         if (offset == 0)
             offset = 1;
         return new Scale(input.getMin() - offset, input.getMax() + offset);
@@ -106,5 +106,5 @@ public class Scale {
         return new String("min=" + min + " max=" + max);
     }
 
-    protected float min, max;
+    protected double min, max;
 }

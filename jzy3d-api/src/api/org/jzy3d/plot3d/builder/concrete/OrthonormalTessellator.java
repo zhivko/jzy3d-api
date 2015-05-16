@@ -47,7 +47,7 @@ import org.jzy3d.plot3d.primitives.Shape;
 public class OrthonormalTessellator extends Tessellator{
 
 	@Override
-	public AbstractComposite build(float[] x, float[] y, float[] z) {
+	public AbstractComposite build(double[] x, double[] y, double[] z) {
 		setData(x, y, z);
 		Shape s = new Shape();
 		s.add(getSquarePolygonsOnCoordinates());
@@ -84,14 +84,14 @@ public class OrthonormalTessellator extends Tessellator{
 	 * 
 	 * @throws an IllegalArgumentException if x, y , and z have not the same size
 	 */
-	protected void setData(float x[], float y[], float z[]){
+	protected void setData(double x[], double y[], double z[]){
 		if(x.length!=y.length || x.length!=z.length)
 			throw new IllegalArgumentException("x, y, and z arrays must agree in length.");
 		
 		// Initialize loading
 		this.x = unique(x);
 		this.y = unique(y);
-		this.z = new float[this.x.length][this.y.length];
+		this.z = new double[this.x.length][this.y.length];
 		
 		for(int i=0; i<this.x.length; i++)
 			for(int j=0; j<this.y.length; j++)
@@ -113,15 +113,15 @@ public class OrthonormalTessellator extends Tessellator{
 	 * @param data input array.
 	 * @return a sorted array containing only one occurrence of each input value.
 	 */
-	protected float [] unique(float[] data){
-		float [] copy = Array.clone(data);
+	protected double [] unique(double[] data){
+		double [] copy = Array.clone(data);
 		Arrays.sort(copy);
 		
 		// count unique values
 		int nunique = 0;
-	    float last = Float.NaN;
+	    double last = Float.NaN;
 	    for(int i=0; i<copy.length; i++){
-	    	if(Float.isNaN(copy[i])){
+	    	if(Double.isNaN(copy[i])){
 	    		//System.out.println("Ignoring NaN value at " + i);
 	    	}
 	    	else if(copy[i] != last){
@@ -131,11 +131,11 @@ public class OrthonormalTessellator extends Tessellator{
 	    }
 	    
 	    // Fill a sorted unique array
-	    float [] result = new float[nunique];
+	    double [] result = new double[nunique];
 	    last = Float.NaN;
 	    int r = 0;
 	    for(int d=0; d<copy.length; d++){
-	    	if(Float.isNaN(copy[d])){
+	    	if(Double.isNaN(copy[d])){
 	    		//System.out.println("Ignoring NaN value at " + d);
 	    	}
 	    	else if(copy[d] != last){
@@ -152,7 +152,7 @@ public class OrthonormalTessellator extends Tessellator{
 	 * Function returns true if the couple of data may be retrieved,
 	 * false otherwise (in this case, xi and yj remain unchanged).
 	 */
-	protected boolean find(float[] x, float[] y, float vx, float vy) {
+	protected boolean find(double[] x, double[] y, double vx, double vy) {
         int xi = -1, yj = -1;
         for (int i = 0; i < x.length; i++) {
             if (x[i] == vx) {
@@ -279,7 +279,7 @@ public class OrthonormalTessellator extends Tessellator{
 	}
 	
 	protected boolean validZ(Point p){
-		return !Float.isNaN(p.xyz.z);
+		return !Double.isNaN(p.xyz.z);
 	}
 	
 	protected AbstractDrawable newQuad(Point p[]){
@@ -291,9 +291,9 @@ public class OrthonormalTessellator extends Tessellator{
 	
 	/* */
 	
-	protected float x[];
-	protected float y[];
-	protected float z[][];
+	protected double x[];
+	protected double y[];
+	protected double z[][];
 	protected int  findxi;
 	protected int  findyj;
 }

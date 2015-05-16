@@ -378,7 +378,7 @@ public class Chart {
         return new Scale(view.getBounds().getZmin(), view.getBounds().getZmax());
     }
 
-    public float flip(float y) {
+    public float flip(double y) {
         return canvas.getRendererHeight() - y;
     }
 

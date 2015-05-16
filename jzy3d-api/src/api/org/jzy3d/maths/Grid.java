@@ -4,7 +4,7 @@ public class Grid {
 	public Grid(){		
 	}
 	
-	public Grid(float[]x, float[]y, float[][] z){
+	public Grid(double[]x, double[]y, double[][] z){
 		setData(x, y, z);
 	}
 	
@@ -14,7 +14,7 @@ public class Grid {
 	
 	/*********************************************/
 	
-	public void setData(float[]x, float[]y, float[][] z){
+	public void setData(double[]x, double[]y, double[][] z){
 		this.x = x;
 		this.y = y;
 		this.z = z;
@@ -26,15 +26,15 @@ public class Grid {
 		this.z = toFloatArray( z );
 	}
 	
-	public float[] getX() {
+	public double[] getX() {
 		return x;
 	}
 
-	public float[] getY() {
+	public double[] getY() {
 		return y;
 	}
 
-	public float[][] getZ() {
+	public double[][] getZ() {
 		return z;
 	}
 	
@@ -49,15 +49,15 @@ public class Grid {
 	
 	/*********************************************/
 	
-	protected float[] toFloatArray(int[] input){
-		float[] out = new float[input.length];		
+	protected double[] toFloatArray(int[] input){
+		double[] out = new double[input.length];		
 		for (int i = 0; i < input.length; i++)
 			out[i] = input[i];
 		return out;
 	}
 	
-	protected float[][] toFloatArray(int[][] input){
-		float[][] out = new float[input.length][input[0].length];
+	protected double[][] toFloatArray(int[][] input){
+		double[][] out = new double[input.length][input[0].length];
 		
 		for (int i = 0; i < input.length; i++)
 			for (int j = 0; j < input[i].length; j++)
@@ -65,9 +65,9 @@ public class Grid {
 		return out;
 	}
 	
-	protected float[]x;
-	protected float[]y;
-	protected float[][] z;
+	protected double[]x;
+	protected double[]y;
+	protected double[][] z;
 	
 	protected BoundingBox3d bounds;
 }

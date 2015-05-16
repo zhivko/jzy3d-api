@@ -57,8 +57,8 @@ public class AxeBoxWithTxtRenderer extends AxeBox implements IAxe {
 		int quad_1;
 		Halign hAlign;
 		Valign vAlign;
-		float tickLength = 20.0f; // with respect to range
-		float axeLabelDist = 2.5f;
+		double tickLength = 20.0f; // with respect to range
+		double axeLabelDist = 2.5f;
 		BoundingBox3d ticksTxtBounds = new BoundingBox3d();
 
 		// Retrieve the quads that intersect and create the selected axe
@@ -87,9 +87,9 @@ public class AxeBoxWithTxtRenderer extends AxeBox implements IAxe {
 
 		// Computes the DIRection of the ticks
 		// assuming initial vector point is the center
-		float xdir = (normx[quad_0] + normx[quad_1]) - center.x;
-		float ydir = (normy[quad_0] + normy[quad_1]) - center.y;
-		float zdir = (normz[quad_0] + normz[quad_1]) - center.z;
+		double xdir = (normx[quad_0] + normx[quad_1]) - center.x;
+		double ydir = (normy[quad_0] + normy[quad_1]) - center.y;
+		double zdir = (normz[quad_0] + normz[quad_1]) - center.z;
 		xdir = xdir == 0 ? 0 : xdir / Math.abs(xdir); // so that direction as
 														// length 1
 		ydir = ydir == 0 ? 0 : ydir / Math.abs(ydir);

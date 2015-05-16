@@ -36,7 +36,7 @@ public class Tube extends AbstractWireframeable implements ISingleColorable {
 	}
 
 	/** Initialize a cylinder with the given parameters. */
-	public Tube(Coord3d position, float radius, float height, int hslicing,
+	public Tube(Coord3d position, double radius, double height, int hslicing,
 			int vslicing, Color color) {
 		super();
 		bbox = new BoundingBox3d();
@@ -53,9 +53,9 @@ public class Tube extends AbstractWireframeable implements ISingleColorable {
 		doTransform(gl, glu, cam);
 
 		if (gl.isGL2()) {
-			gl.getGL2().glTranslatef(x, y, z);
+			gl.getGL2().glTranslated(x, y, z);
 		} else {
-			GLES2CompatUtils.glTranslatef(x, y, z);
+			GLES2CompatUtils.glTranslatef((float)x, (float)y, (float)z);
 		}
 
 		gl.glLineWidth(wfwidth);
@@ -158,8 +158,8 @@ public class Tube extends AbstractWireframeable implements ISingleColorable {
 	 * @param stacks
 	 *            number of horizontal stacks (i.e. wireframes)
 	 */
-	public void setData(Coord3d position, float radiusBottom, float radiusTop,
-			float height, int slices, int stacks) {
+	public void setData(Coord3d position, double radiusBottom, double radiusTop,
+			double height, int slices, int stacks) {
 		setPosition(position);
 		setVolume(radiusBottom, radiusTop, height);
 		setSlicing(slices, stacks);
@@ -193,7 +193,7 @@ public class Tube extends AbstractWireframeable implements ISingleColorable {
 	 * @param radiusTop
 	 * @param height
 	 */
-	public void setVolume(float radiusBottom, float radiusTop, float height) {
+	public void setVolume(double radiusBottom, double radiusTop, double height) {
 		this.radiusBottom = radiusBottom;
 		this.radiusTop = radiusTop;
 		this.height = height;
@@ -231,12 +231,12 @@ public class Tube extends AbstractWireframeable implements ISingleColorable {
 
 	/* */
 
-	private float x;
-	private float y;
-	private float z;
-	private float radiusBottom;
-	private float radiusTop;
-	private float height;
+	private double x;
+	private double y;
+	private double z;
+	private double radiusBottom;
+	private double radiusTop;
+	private double height;
 
 	private int slices;
 	private int stacks;

@@ -26,9 +26,9 @@ public class Scale implements Transformer {
 	@Override
     public void execute(GL gl) {
 		if (gl.isGL2()) {
-			gl.getGL2().glScalef(scale.x, scale.y, scale.z);
+			gl.getGL2().glScaled(scale.x, scale.y, scale.z);
 		} else {
-			GLES2CompatUtils.glScalef(scale.x, scale.y, scale.z);
+			GLES2CompatUtils.glScalef((float)scale.x, (float)scale.y, (float)scale.z);
 		}
 	}
 

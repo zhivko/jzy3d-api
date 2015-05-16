@@ -86,6 +86,20 @@ public class Statistics {
 		return minv;
 	}
     
+    public static double min(double[][] values){
+        if(values.length==0)
+            throw new IllegalArgumentException("Input array must have a length greater than 0");
+        
+        double minv = Double.POSITIVE_INFINITY;
+        
+        for( int i=0; i<values.length; i++ )
+            for( int j=0; j<values[i].length; j++ )
+                if(!Double.isNaN(values[i][j]))
+                    if( values[i][j] < minv )
+                        minv = values[i][j];    
+        return minv;
+    }
+    
     public static float min(float[][] values){
     	if(values.length==0)
 			throw new IllegalArgumentException("Input array must have a length greater than 0");
@@ -210,6 +224,20 @@ public class Statistics {
 						maxv = values[i][j];				
 		return maxv;
 	}
+    
+    public static double max(double[][] values){
+        if(values.length==0)
+            throw new IllegalArgumentException("Input array must have a length greater than 0");
+
+        double maxv = Double.NEGATIVE_INFINITY;
+        
+        for( int i=0; i<values.length; i++ )
+            for( int j=0; j<values[i].length; j++ )
+                if(!Double.isNaN(values[i][j]))
+                    if( values[i][j] > maxv )
+                        maxv = values[i][j];                
+        return maxv;
+    }
     
     public static int max(int[][] values){
     	if(values.length==0)

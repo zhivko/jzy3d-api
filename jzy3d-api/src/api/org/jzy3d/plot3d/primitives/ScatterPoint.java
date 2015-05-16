@@ -60,7 +60,7 @@ public class ScatterPoint extends AbstractDrawable implements ISingleColorable {
         if (points != null) {
             for (LightPoint p : points) {
                 GLES2CompatUtils.glColor4f(p.rgb.r, p.rgb.g, p.rgb.b, p.rgb.a);
-                GLES2CompatUtils.glVertex3f(p.xyz.x, p.xyz.y, p.xyz.z);
+                GLES2CompatUtils.glVertex3f((float)p.xyz.x, (float)p.xyz.y, (float)p.xyz.z);
             }
         }
         GLES2CompatUtils.glEnd();
@@ -72,7 +72,7 @@ public class ScatterPoint extends AbstractDrawable implements ISingleColorable {
         if (points != null) {
             for (LightPoint p : points) {
                 gl.getGL2().glColor4f(p.rgb.r, p.rgb.g, p.rgb.b, p.rgb.a);
-                gl.getGL2().glVertex3f(p.xyz.x, p.xyz.y, p.xyz.z);
+                gl.getGL2().glVertex3d(p.xyz.x, p.xyz.y, p.xyz.z);
             }
         }
         gl.getGL2().glEnd();

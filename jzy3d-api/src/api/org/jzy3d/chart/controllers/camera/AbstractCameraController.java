@@ -36,41 +36,41 @@ public abstract class AbstractCameraController extends AbstractController implem
 		fireControllerEvent(ControllerType.ROTATE, move);
 	}
 	
-    protected void shift(final float factor){
+    protected void shift(final double factor){
         shift(factor, DEFAULT_UPDATE_VIEW);
     }	
     
-	protected void shift(final float factor, boolean updateView){
+	protected void shift(final double factor, boolean updateView){
 		for(Chart c: targets)
 			c.getView().shift(factor, updateView);
 		fireControllerEvent(ControllerType.SHIFT, factor);
 	}
 	
-	protected void zoomX(final float factor){
+	protected void zoomX(final double factor){
         zoomX(factor, DEFAULT_UPDATE_VIEW);
     }   
     
-	protected void zoomX(final float factor, boolean updateView){
+	protected void zoomX(final double factor, boolean updateView){
         for(Chart c: targets)
             c.getView().zoomX(factor, updateView);
         fireControllerEvent(ControllerType.ZOOM, factor);
     }
 	
-	protected void zoomY(final float factor){
+	protected void zoomY(final double factor){
         zoomY(factor, DEFAULT_UPDATE_VIEW);
     }   
     
-    protected void zoomY(final float factor, boolean updateView){
+    protected void zoomY(final double factor, boolean updateView){
         for(Chart c: targets)
             c.getView().zoomY(factor, updateView);
         fireControllerEvent(ControllerType.ZOOM, factor);
     }
     
-    protected void zoomZ(final float factor){
+    protected void zoomZ(final double factor){
         zoomZ(factor, DEFAULT_UPDATE_VIEW);
     }   
     
-    protected void zoomZ(final float factor, boolean updateView){
+    protected void zoomZ(final double factor, boolean updateView){
         for(Chart c: targets)
             c.getView().zoomZ(factor, updateView);
         fireControllerEvent(ControllerType.ZOOM, factor);

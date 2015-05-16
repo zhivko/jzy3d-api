@@ -96,12 +96,12 @@ public class ConcurrentLineStripSplitted extends ConcurrentLineStrip {
 
     public void pointColorWire(GL gl, Point p) {
         gl.getGL2().glColor4f(wfcolor.r, wfcolor.g, wfcolor.b, wfcolor.a);
-        gl.getGL2().glVertex3f(p.xyz.x, p.xyz.y, p.xyz.z);
+        gl.getGL2().glVertex3d(p.xyz.x, p.xyz.y, p.xyz.z);
     }
 
     public void pointColorSelf(GL gl, Point p) {
         gl.getGL2().glColor4f(p.rgb.r, p.rgb.g, p.rgb.b, p.rgb.a);
-        gl.getGL2().glVertex3f(p.xyz.x, p.xyz.y, p.xyz.z);
+        gl.getGL2().glVertex3d(p.xyz.x, p.xyz.y, p.xyz.z);
     }
 
     public void begin(GL gl) {

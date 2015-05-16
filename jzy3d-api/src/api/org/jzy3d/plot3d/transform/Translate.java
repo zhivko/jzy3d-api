@@ -29,9 +29,9 @@ public class Translate implements Transformer {
 	@Override
     public void execute(GL gl) {
 		if (gl.isGL2()) {
-			gl.getGL2().glTranslatef(shift.x, shift.y, shift.z);
+			gl.getGL2().glTranslated(shift.x, shift.y, shift.z);
 		} else {
-			GLES2CompatUtils.glTranslatef(shift.x, shift.y, shift.z);
+			GLES2CompatUtils.glTranslatef((float)shift.x, (float)shift.y, (float)shift.z);
 		}
 	}
 

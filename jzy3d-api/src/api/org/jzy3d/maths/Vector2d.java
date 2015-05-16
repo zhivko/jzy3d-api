@@ -8,7 +8,7 @@ package org.jzy3d.maths;
 public class Vector2d {
 
 	/** Create a vector, described by two points.*/
-	public Vector2d(float x1, float y1, float x2, float y2){
+	public Vector2d(double x1, double y1, double x2, double y2){
 		this.x1 = x1;
 		this.x2 = x2;
 		this.y1 = y1;
@@ -35,7 +35,7 @@ public class Vector2d {
 	 * @param v input vector
 	 * @return the dot product
 	 */
-	public float dot(Vector2d v){
+	public double dot(Vector2d v){
 		Coord2d v1 = vector();
 		Coord2d v2 = v.vector();
 		return v1.x*v2.x + v1.y*v2.y;
@@ -45,14 +45,14 @@ public class Vector2d {
 	 * Compute the norm of this vector.
 	 * @return the norm
 	 */
-	public float norm(){
-		return (float)Math.sqrt( Math.pow(x2-x1,2) + Math.pow(y2-y1,2) );
+	public double norm(){
+		return (double)Math.sqrt( Math.pow(x2-x1,2) + Math.pow(y2-y1,2) );
 	}
 		
 	/***********************************************************/
 	
-	private float x1;
-	private float x2;
-	private float y1;
-	private float y2;
+	private double x1;
+	private double x2;
+	private double y1;
+	private double y2;
 }

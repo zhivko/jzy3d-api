@@ -95,8 +95,8 @@ public abstract class AWTAbstractMouseSelector implements MouseListener, MouseMo
      * @return true if the point (px,py) is inside the (in,out) mouse selection
      *         of a canvas having dimensions (width, height)
      */
-    protected boolean matchRectangleSelection(IntegerCoord2d in, IntegerCoord2d out, float px, float py, int width, int height) {
-        float flipYProjection = height - py;
+    protected boolean matchRectangleSelection(IntegerCoord2d in, IntegerCoord2d out, double px, double py, int width, int height) {
+        double flipYProjection = height - py;
 
         // 4|3
         // ---

@@ -19,22 +19,18 @@ public class Rotate implements Transformer {
 	 * @param angle
 	 * @param rotate
 	 */
-	public Rotate(float angle, Coord3d rotate) {
+	public Rotate(double angle, Coord3d rotate) {
 		this.angle = angle;
 		this.rotate = rotate;
 	}
 
-	public Rotate(double angle, Coord3d rotate) {
-		this.angle = (float) angle;
-		this.rotate = rotate;
-	}
 
 	@Override
     public void execute(GL gl) {
 		if (gl.isGL2()) {
-			gl.getGL2().glRotatef(angle, rotate.x, rotate.y, rotate.z);
+			gl.getGL2().glRotated(angle, rotate.x, rotate.y, rotate.z);
 		} else {
-			GLES2CompatUtils.glRotatef(angle, rotate.x, rotate.y, rotate.z);
+			GLES2CompatUtils.glRotatef((float)angle, (float)rotate.x, (float)rotate.y, (float)rotate.z);
 		}
 	}
 
@@ -48,11 +44,11 @@ public class Rotate implements Transformer {
 		return "(Rotate)a=" + angle + " " + rotate;
 	}
 
-	public float getAngle() {
+	public double getAngle() {
 		return angle;
 	}
 
-	public void setAngle(float angle) {
+	public void setAngle(double angle) {
 		this.angle = angle;
 	}
 
@@ -64,6 +60,6 @@ public class Rotate implements Transformer {
 		this.rotate = rotate;
 	}
 
-	private float angle;
+	private double angle;
 	private Coord3d rotate;
 }

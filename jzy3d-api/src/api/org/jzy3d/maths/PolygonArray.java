@@ -2,7 +2,7 @@ package org.jzy3d.maths;
 
 
 public class PolygonArray{
-	public PolygonArray(float x[], float y[], float z[]){
+	public PolygonArray(double x[], double y[], double z[]){
 		this.x = x;
 		this.y = y;
 		this.z = z;
@@ -18,8 +18,8 @@ public class PolygonArray{
 		return barycentre;
 	}
 	
-	public float x[];
-	public float y[];
-	public float z[];
+	public double x[];
+	public double y[];
+	public double z[];
 	protected Coord3d barycentre;
 }

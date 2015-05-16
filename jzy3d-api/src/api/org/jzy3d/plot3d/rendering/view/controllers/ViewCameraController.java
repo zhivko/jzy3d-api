@@ -37,7 +37,7 @@ public abstract class ViewCameraController {
 		fireControllerEvent(ControllerType.ROTATE, move);
 	}
 	
-	protected void shift(final float factor){
+	protected void shift(final double factor){
 		for(View view: targets)
 			view.shift(factor);
 		fireControllerEvent(ControllerType.SHIFT, factor);

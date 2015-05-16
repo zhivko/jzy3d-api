@@ -27,7 +27,7 @@ public class Disk extends AbstractWireframeable implements ISingleColorable {
 	}
 
 	/** Initialize a cylinder with the given parameters. */
-	public Disk(Coord3d position, float radiusInner, float radiusOuter,
+	public Disk(Coord3d position, double radiusInner, double radiusOuter,
 			int slices, int loops, Color color) {
 		super();
 		bbox = new BoundingBox3d();
@@ -44,7 +44,7 @@ public class Disk extends AbstractWireframeable implements ISingleColorable {
 		doTransform(gl, glu, cam);
 
 		if (gl.isGL2()) {
-			gl.getGL2().glTranslatef(x, y, z);
+			gl.getGL2().glTranslated(x, y, z);
 
 			gl.glLineWidth(wfwidth);
 
@@ -71,7 +71,7 @@ public class Disk extends AbstractWireframeable implements ISingleColorable {
 				glu.gluDisk(qobj, radiusInner, radiusOuter, slices, loops);
 			}
 		} else {
-			GLES2CompatUtils.glTranslatef(x, y, z);
+			GLES2CompatUtils.glTranslatef((float)x, (float)y, (float)z);
 
 			gl.glLineWidth(wfwidth);
 
@@ -104,7 +104,7 @@ public class Disk extends AbstractWireframeable implements ISingleColorable {
 
 	/* */
 
-	public void setData(Coord3d position, float radiusInner, float radiusOuter,
+	public void setData(Coord3d position, double radiusInner, double radiusOuter,
 			int slices, int loops) {
 		setPosition(position);
 		setVolume(radiusInner, radiusOuter);
@@ -119,7 +119,7 @@ public class Disk extends AbstractWireframeable implements ISingleColorable {
 		updateBounds();
 	}
 
-	public void setVolume(float radiusInner, float radiusOuter) {
+	public void setVolume(double radiusInner, double radiusOuter) {
 		if (radiusOuter < radiusInner)
 			throw new IllegalArgumentException(
 					"inner radius must be smaller than outer radius");
@@ -168,14 +168,14 @@ public class Disk extends AbstractWireframeable implements ISingleColorable {
 
 	/* */
 
-	private float x;
-	private float y;
-	private float z;
+	private double x;
+	private double y;
+	private double z;
 
 	private int slices;
 	private int loops;
-	private float radiusInner;
-	private float radiusOuter;
+	private double radiusInner;
+	private double radiusOuter;
 
 	private Color color;
 }

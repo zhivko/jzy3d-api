@@ -6,5 +6,5 @@ package org.jzy3d.plot3d.transform.space;
  * @author 
  */
 public interface SpaceTransform {
-	public float compute(float value);
+	public double compute(double value);
 }

@@ -37,10 +37,10 @@ public class TextBitmapRenderer extends AbstractTextRenderer implements ITextRen
     public void drawSimpleText(GL gl, GLU glu, Camera cam, String s, Coord3d position, Color color) {
         if (gl.isGL2()) {
             gl.getGL2().glColor3f(color.r, color.g, color.b);
-            gl.getGL2().glRasterPos3f(position.x, position.y, position.z);
+            gl.getGL2().glRasterPos3d(position.x, position.y, position.z);
         } else {
             GLES2CompatUtils.glColor3f(color.r, color.g, color.b);
-            GLES2CompatUtils.glRasterPos3f(position.x, position.y, position.z);
+            GLES2CompatUtils.glRasterPos3f((float)position.x, (float)position.y, (float)position.z);
         }
 
         glut.glutBitmapString(font, s);
@@ -56,9 +56,9 @@ public class TextBitmapRenderer extends AbstractTextRenderer implements ITextRen
 
         // compute a corrected position according to layout
         Coord3d posScreen = cam.modelToScreen(gl, glu, position);
-        float strlen = glut.glutBitmapLength(font, text);
-        float x = computeXWithAlign(halign, posScreen, strlen, 0.0f);
-        float y = computeYWithAlign(valign, posScreen, 0.0f);
+        double strlen = glut.glutBitmapLength(font, text);
+        double x = computeXWithAlign(halign, posScreen, strlen, 0.0f);
+        double y = computeYWithAlign(valign, posScreen, 0.0f);
         Coord3d posScreenShifted = new Coord3d(x + screenOffset.x, y + screenOffset.y, posScreen.z);
         
         Coord3d posReal;
@@ -78,13 +78,13 @@ public class TextBitmapRenderer extends AbstractTextRenderer implements ITextRen
 
     public void glRasterPos(GL gl, Coord3d sceneOffset, Coord3d posReal) {
         if (gl.isGL2()) {
-            gl.getGL2().glRasterPos3f(posReal.x + sceneOffset.x, posReal.y + sceneOffset.y, posReal.z + sceneOffset.z);
+            gl.getGL2().glRasterPos3d(posReal.x + sceneOffset.x, posReal.y + sceneOffset.y, posReal.z + sceneOffset.z);
         } else {
-            GLES2CompatUtils.glRasterPos3f(posReal.x + sceneOffset.x, posReal.y + sceneOffset.y, posReal.z + sceneOffset.z);
+            GLES2CompatUtils.glRasterPos3f((float)(posReal.x + sceneOffset.x), (float)(posReal.y + sceneOffset.y), (float)(posReal.z + sceneOffset.z));
         }
     }
 
-    public BoundingBox3d computeTextBounds(GL gl, GLU glu, Camera cam, Coord3d posScreenShifted, float strlen) {
+    public BoundingBox3d computeTextBounds(GL gl, GLU glu, Camera cam, Coord3d posScreenShifted, double strlen) {
         Coord3d botLeft = new Coord3d();
         Coord3d topRight = new Coord3d();
         botLeft.x = posScreenShifted.x;
@@ -108,7 +108,7 @@ public class TextBitmapRenderer extends AbstractTextRenderer implements ITextRen
         }
     }
 
-    public float computeYWithAlign(Valign valign, Coord3d posScreen, float y) {
+    public double computeYWithAlign(Valign valign, Coord3d posScreen, double y) {
         if (valign == Valign.TOP)
             y = posScreen.y;
         else if (valign == Valign.GROUND)
@@ -120,7 +120,7 @@ public class TextBitmapRenderer extends AbstractTextRenderer implements ITextRen
         return y;
     }
 
-    public float computeXWithAlign(Halign halign, Coord3d posScreen, float strlen, float x) {
+    public double computeXWithAlign(Halign halign, Coord3d posScreen, double strlen, double x) {
         if (halign == Halign.RIGHT)
             x = posScreen.x;
         else if (halign == Halign.CENTER)

@@ -64,7 +64,7 @@ public class ContourAxeBox extends AxeBox {
 
 	protected void rebuildTexture(){
         BufferedImageTexture contourResource = new BufferedImageTexture(contourImg);
-        float zrange = zmax - zmin; // avoids rendering problems with the tick lines on the bottom part of the cube
+        double zrange = zmax - zmin; // avoids rendering problems with the tick lines on the bottom part of the cube
         this.contourTexture = new DrawableTexture(contourResource, PlaneAxis.Z, zmin - zrange/1000, getDefaultTextureMapping());        
     }
 
@@ -80,7 +80,7 @@ public class ContourAxeBox extends AxeBox {
 	/****************/
 	
 	@Override
-    protected void setAxeBox(float xmin, float xmax, float ymin, float ymax, float zmin, float zmax){
+    protected void setAxeBox(double xmin, double xmax, double ymin, double ymax, double zmin, double zmax){
 		super.setAxeBox(xmin, xmax, ymin, ymax, zmin, zmax);
 		this.xmin = xmin;
 		this.xmax = xmax;
@@ -138,12 +138,12 @@ public class ContourAxeBox extends AxeBox {
 	
 	/****************/
 
-	protected float xmin;
-	protected float xmax;
-	protected float ymin;
-	protected float ymax;
-	protected float zmin;
-	protected float zmax;
+	protected double xmin;
+	protected double xmax;
+	protected double ymin;
+	protected double ymax;
+	protected double zmin;
+	protected double zmax;
 	protected BufferedImage contourImg;
 	protected DrawableTexture contourTexture;
 	protected ContourMesh mesh;

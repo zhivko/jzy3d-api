@@ -47,7 +47,7 @@ public interface IImageViewport {
      * @throws an
      *             IllegalArgumentException if right is not greater than left.
      */
-    public void setViewPort(int width, int height, float left, float right) ;
+    public void setViewPort(int width, int height, double left, double right) ;
 
     public void setViewPort(ViewportConfiguration viewport);
 

@@ -13,10 +13,10 @@ public class AxeXRectangleAnnotation extends AxeXLineAnnotation implements AxeAn
         GLES2CompatUtils.glBegin(GL2.GL_POLYGON);
         //GLES2CompatUtils.glLineWidth(width);
         GLES2CompatUtils.glColor4f(color.r, color.g, color.b, color.a);
-        GLES2CompatUtils.glVertex3f(value, yrange.getMin(), 0);
-        GLES2CompatUtils.glVertex3f(value, yrange.getMax(), 0);
-        GLES2CompatUtils.glVertex3f(value-width, yrange.getMax(), 0);
-        GLES2CompatUtils.glVertex3f(value-width, yrange.getMin(), 0);
+        GLES2CompatUtils.glVertex3f(value, (float)yrange.getMin(), 0);
+        GLES2CompatUtils.glVertex3f(value, (float)yrange.getMax(), 0);
+        GLES2CompatUtils.glVertex3f(value-width, (float)yrange.getMax(), 0);
+        GLES2CompatUtils.glVertex3f(value-width, (float)yrange.getMin(), 0);
         GLES2CompatUtils.glEnd();
     }
 
@@ -27,14 +27,14 @@ public class AxeXRectangleAnnotation extends AxeXLineAnnotation implements AxeAn
         
         applyPolygonModeLine(gl);
         applyPolygonModeFill(gl);
-        float ymin = yrange.getMin()-yrange.getRange()/30;
-        float ymax = yrange.getMax()+yrange.getRange()/30;
-        float z = zrange.getMin()-2;
+        double ymin = yrange.getMin()-yrange.getRange()/30;
+        double ymax = yrange.getMax()+yrange.getRange()/30;
+        double z = zrange.getMin()-2;
         
-        gl.getGL2().glVertex3f(value-width, ymin, z);
-        gl.getGL2().glVertex3f(value-width, ymax, z);
-        gl.getGL2().glVertex3f(value, ymax, z);
-        gl.getGL2().glVertex3f(value, ymin, z);
+        gl.getGL2().glVertex3d(value-width, ymin, z);
+        gl.getGL2().glVertex3d(value-width, ymax, z);
+        gl.getGL2().glVertex3d(value, ymax, z);
+        gl.getGL2().glVertex3d(value, ymin, z);
         
         //System.out.println("x=" + value +  " w:" + width + " ymin=" + ymin + " ymax=" + ymax);
         gl.getGL2().glEnd();

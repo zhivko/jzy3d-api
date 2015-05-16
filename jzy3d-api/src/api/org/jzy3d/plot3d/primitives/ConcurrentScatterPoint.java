@@ -26,7 +26,7 @@ public class ConcurrentScatterPoint extends ScatterPoint {
             synchronized (points) {
                 for (LightPoint p : points) {
                     GLES2CompatUtils.glColor4f(p.rgb.r, p.rgb.g, p.rgb.b, p.rgb.a);
-                    GLES2CompatUtils.glVertex3f(p.xyz.x, p.xyz.y, p.xyz.z);
+                    GLES2CompatUtils.glVertex3f((float)p.xyz.x, (float)p.xyz.y, (float)p.xyz.z);
                 }
             }
         }
@@ -42,7 +42,7 @@ public class ConcurrentScatterPoint extends ScatterPoint {
             synchronized (points) {
                 for (LightPoint p : points) {
                     gl.getGL2().glColor4f(p.rgb.r, p.rgb.g, p.rgb.b, p.rgb.a);
-                    gl.getGL2().glVertex3f(p.xyz.x, p.xyz.y, p.xyz.z);
+                    gl.getGL2().glVertex3d(p.xyz.x, p.xyz.y, p.xyz.z);
                 }
             }
         }

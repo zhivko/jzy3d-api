@@ -63,7 +63,7 @@ public class ScatterMultiColorList extends AbstractDrawable implements IMultiCol
             for (Coord3d coord : coordinates) {
                 Color color = mapper.getColor(coord);
                 GLES2CompatUtils.glColor4f(color.r, color.g, color.b, color.a);
-                GLES2CompatUtils.glVertex3f(coord.x, coord.y, coord.z);
+                GLES2CompatUtils.glVertex3f((float)coord.x, (float)coord.y, (float)coord.z);
             }
         }
         GLES2CompatUtils.glEnd();
@@ -77,7 +77,7 @@ public class ScatterMultiColorList extends AbstractDrawable implements IMultiCol
             for (Coord3d coord : coordinates) {
                 Color color = mapper.getColor(coord);
                 gl.getGL2().glColor4f(color.r, color.g, color.b, color.a);
-                gl.getGL2().glVertex3f(coord.x, coord.y, coord.z);
+                gl.getGL2().glVertex3d(coord.x, coord.y, coord.z);
             }
         }
         gl.getGL2().glEnd();

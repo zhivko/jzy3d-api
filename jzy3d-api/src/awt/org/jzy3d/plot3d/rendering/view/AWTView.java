@@ -81,11 +81,11 @@ public class AWTView extends ChartView {
         BoundingBox3d newBounds = abox.getWholeBounds().scale(scaling);
 
         if (viewmode == ViewPositionMode.TOP) {
-            float radius = Math.max(newBounds.getXmax() - newBounds.getXmin(), newBounds.getYmax() - newBounds.getYmin()) / 2;
+            double radius = Math.max(newBounds.getXmax() - newBounds.getXmin(), newBounds.getYmax() - newBounds.getYmin()) / 2;
             radius += (radius * STRETCH_RATIO);
             cam.setRenderingSphereRadius(radius);
         } else
-            cam.setRenderingSphereRadius((float) newBounds.getRadius());
+            cam.setRenderingSphereRadius((double) newBounds.getRadius());
 
         Coord3d target = newBounds.getCenter();
         Coord3d eye = viewpoint.cartesian().add(target);
@@ -158,7 +158,7 @@ public class AWTView extends ChartView {
     }
 
     @Override
-    public void renderBackground(GL gl, GLU glu, float left, float right) {
+    public void renderBackground(GL gl, GLU glu, double left, double right) {
         if (bgImg != null) {
             bgViewport.setViewPort(canvas.getRendererWidth(), canvas.getRendererHeight(), left, right);
             bgViewport.render(gl, glu);

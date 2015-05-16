@@ -83,10 +83,10 @@ public class AxeBox implements IAxe {
     public void doTransform(GL gl) {
         if (gl.isGL2()) {
             gl.getGL2().glLoadIdentity();
-            gl.getGL2().glScalef(scale.x, scale.y, scale.z);
+            gl.getGL2().glScaled(scale.x, scale.y, scale.z);
         } else {
             GLES2CompatUtils.glLoadIdentity();
-            GLES2CompatUtils.glScalef(scale.x, scale.y, scale.z);
+            GLES2CompatUtils.glScalef((float)scale.x, (float)scale.y, (float)scale.z);
         }
     }
 
@@ -338,8 +338,8 @@ public class AxeBox implements IAxe {
     protected BoundingBox3d drawTicks(GL gl, GLU glu, Camera cam, int axis, int direction, Color color, Halign hal, Valign val) {
         int quad_0;
         int quad_1;
-        float tickLength = 20.0f; // with respect to range
-        float axeLabelDist = 2.5f;
+        double tickLength = 20.0f; // with respect to range
+        double axeLabelDist = 2.5f;
         BoundingBox3d ticksTxtBounds = new BoundingBox3d();
 
         // Retrieve the quads that intersect and create the selected axe
@@ -374,9 +374,9 @@ public class AxeBox implements IAxe {
 
         // Computes the DIRection of the ticks
         // assuming initial vector point is the center
-        float xdir = (normx[quad_0] + normx[quad_1]) - center.x;
-        float ydir = (normy[quad_0] + normy[quad_1]) - center.y;
-        float zdir = (normz[quad_0] + normz[quad_1]) - center.z;
+        double xdir = (normx[quad_0] + normx[quad_1]) - center.x;
+        double ydir = (normy[quad_0] + normy[quad_1]) - center.y;
+        double zdir = (normz[quad_0] + normz[quad_1]) - center.z;
         xdir = xdir == 0 ? 0 : xdir / Math.abs(xdir); // so that direction as
                                                       // length 1
         ydir = ydir == 0 ? 0 : ydir / Math.abs(ydir);
@@ -458,7 +458,7 @@ public class AxeBox implements IAxe {
         return ticks;
     }
 
-    public void drawAxisTicks(GL gl, GLU glu, Camera cam, int direction, Color color, Halign hal, Valign val, float tickLength, BoundingBox3d ticksTxtBounds, double xpos, double ypos, double zpos, float xdir, float ydir, float zdir, double[] ticks) {
+    public void drawAxisTicks(GL gl, GLU glu, Camera cam, int direction, Color color, Halign hal, Valign val, double tickLength, BoundingBox3d ticksTxtBounds, double xpos, double ypos, double zpos, double xdir, double ydir, double zdir, double[] ticks) {
         double xlab;
         double ylab;
         double zlab;
@@ -490,19 +490,19 @@ public class AxeBox implements IAxe {
             } else {
                 // use space transform shift if we have a space transformer
                 if (isX(direction)) {
-                    xpos = spaceTransformer.getX().compute((float) ticks[t]);
+                    xpos = spaceTransformer.getX().compute((double) ticks[t]);
                     xlab = xpos;
                     ylab = Math.signum(tickLength * ydir) * (yrange / spaceTransformer.getY().compute(Math.abs(tickLength))) * spaceTransformer.getY().compute(Math.abs(ydir)) + ypos;
                     zlab = Math.signum(tickLength * ydir) * (zrange / spaceTransformer.getZ().compute(Math.abs(tickLength))) * spaceTransformer.getZ().compute(Math.abs(zdir)) + zpos;
                     tickLabel = layout.getXTickRenderer().format(xpos);
                 } else if (isY(direction)) {
-                    ypos = spaceTransformer.getY().compute((float) ticks[t]);
+                    ypos = spaceTransformer.getY().compute((double) ticks[t]);
                     xlab = Math.signum(tickLength * xdir) * (xrange / spaceTransformer.getX().compute(Math.abs(tickLength))) * spaceTransformer.getX().compute(Math.abs(xdir)) + xpos;
                     ylab = ypos;
                     zlab = Math.signum(tickLength * zdir) * (zrange / spaceTransformer.getZ().compute(Math.abs(tickLength))) * spaceTransformer.getZ().compute(Math.abs(zdir)) + zpos;
                     tickLabel = layout.getYTickRenderer().format(ypos);
                 } else { // (axis==AXE_Z)
-                    zpos = spaceTransformer.getZ().compute((float) ticks[t]);
+                    zpos = spaceTransformer.getZ().compute((double) ticks[t]);
                     xlab = Math.signum(tickLength * xdir) * (xrange / spaceTransformer.getX().compute(Math.abs(tickLength))) * spaceTransformer.getX().compute(Math.abs(xdir)) + xpos;
                     ylab = Math.signum(tickLength * ydir) * (yrange / spaceTransformer.getY().compute(Math.abs(tickLength))) * spaceTransformer.getY().compute(Math.abs(ydir)) + ypos;
                     zlab = zpos;
@@ -532,12 +532,12 @@ public class AxeBox implements IAxe {
         // doTransform(gl);
         if (gl.isGL2()) {
             gl.getGL2().glLoadIdentity();
-            gl.getGL2().glScalef(scale.x, scale.y, scale.z);
+            gl.getGL2().glScaled(scale.x, scale.y, scale.z);
             // gl.getGL2().glRotatef(90, 1, 0, 1);
         } else {
             GLES2CompatUtils.glLoadIdentity();
-            // GLES2CompatUtils.glRotatef((float)Math.PI/2, 1, 0, 1);
-            GLES2CompatUtils.glScalef(scale.x, scale.y, scale.z);
+            // GLES2CompatUtils.glRotatef((double)Math.PI/2, 1, 0, 1);
+            GLES2CompatUtils.glScalef((float)scale.x, (float)scale.y, (float)scale.z);
         }
 
         BoundingBox3d tickBounds = txt.drawText(gl, glu, cam, tickLabel, tickPosition, hAlign, vAlign, color);
@@ -545,7 +545,7 @@ public class AxeBox implements IAxe {
             ticksTxtBounds.add(tickBounds);
     }
 
-    public Valign layoutVertical(int direction, Valign val, float zdir) {
+    public Valign layoutVertical(int direction, Valign val, double zdir) {
         Valign vAlign;
         if (val == null) {
             if (isZ(direction))
@@ -588,9 +588,9 @@ public class AxeBox implements IAxe {
      */
     protected void vertexGL2(GL gl, Coord3d c) {
         if (spaceTransformer == null) {
-            gl.getGL2().glVertex3f(c.x, c.y, c.z);
+            gl.getGL2().glVertex3d(c.x, c.y, c.z);
         } else {
-            gl.getGL2().glVertex3f(spaceTransformer.getX().compute(c.x), spaceTransformer.getY().compute(c.y), spaceTransformer.getZ().compute(c.z));
+            gl.getGL2().glVertex3d(spaceTransformer.getX().compute(c.x), spaceTransformer.getY().compute(c.y), spaceTransformer.getZ().compute(c.z));
         }
     }
 
@@ -601,9 +601,9 @@ public class AxeBox implements IAxe {
      */
     protected void vertexGLES2(Coord3d c) {
         if (spaceTransformer == null) {
-            GLES2CompatUtils.glVertex3f(c.x, c.y, c.z);
+            GLES2CompatUtils.glVertex3f((float)c.x, (float)c.y, (float)c.z);
         } else {
-            GLES2CompatUtils.glVertex3f(spaceTransformer.getX().compute(c.x), spaceTransformer.getY().compute(c.y), spaceTransformer.getZ().compute(c.z));
+            GLES2CompatUtils.glVertex3f((float)spaceTransformer.getX().compute(c.x), (float)spaceTransformer.getY().compute(c.y), (float)spaceTransformer.getZ().compute(c.z));
         }
     }
 
@@ -750,7 +750,7 @@ public class AxeBox implements IAxe {
     /**
      * Print out parameters of a gl call in 3dColor mode.
      */
-    protected int print3DcolorVertex(int size, int count, float[] buffer) {
+    protected int print3DcolorVertex(int size, int count, double[] buffer) {
         int i;
         int id = size - count;
         int veclength = 7;
@@ -780,7 +780,7 @@ public class AxeBox implements IAxe {
     /**
      * Set the parameters and data of the AxeBox.
      */
-    protected void setAxeBox(float xmin, float xmax, float ymin, float ymax, float zmin, float zmax) {
+    protected void setAxeBox(double xmin, double xmax, double ymin, double ymax, double zmin, double zmax) {
         // Compute center
         center = new Coord3d((xmax + xmin) / 2, (ymax + ymin) / 2, (zmax + zmin) / 2);
         xrange = xmax - xmin;
@@ -788,9 +788,9 @@ public class AxeBox implements IAxe {
         zrange = zmax - zmin;
 
         // Define configuration of 6 quads (faces of the box)
-        quadx = new float[6][4];
-        quady = new float[6][4];
-        quadz = new float[6][4];
+        quadx = new double[6][4];
+        quady = new double[6][4];
+        quadz = new double[6][4];
 
         // x near
         quadx[0][0] = xmax;
@@ -872,9 +872,9 @@ public class AxeBox implements IAxe {
         quadz[5][3] = zmin;
 
         // Define configuration of each quad's normal
-        normx = new float[6];
-        normy = new float[6];
-        normz = new float[6];
+        normx = new double[6];
+        normy = new double[6];
+        normz = new double[6];
 
         normx[0] = xmax;
         normy[0] = 0;
@@ -957,15 +957,15 @@ public class AxeBox implements IAxe {
         // Note: the points making an axe are from - to +
         // (i.e. direction is given by p0->p1)
 
-        axeXx = new float[na][np];
-        axeXy = new float[na][np];
-        axeXz = new float[na][np];
-        axeYx = new float[na][np];
-        axeYy = new float[na][np];
-        axeYz = new float[na][np];
-        axeZx = new float[na][np];
-        axeZy = new float[na][np];
-        axeZz = new float[na][np];
+        axeXx = new double[na][np];
+        axeXy = new double[na][np];
+        axeXz = new double[na][np];
+        axeYx = new double[na][np];
+        axeYy = new double[na][np];
+        axeYz = new double[na][np];
+        axeZx = new double[na][np];
+        axeZy = new double[na][np];
+        axeZz = new double[na][np];
 
         i = 0; // axe x0
         axeXx[i][0] = xmin;
@@ -1157,27 +1157,27 @@ public class AxeBox implements IAxe {
     protected Coord3d center;
     protected Coord3d scale;
 
-    protected float xrange;
-    protected float yrange;
-    protected float zrange;
+    protected double xrange;
+    protected double yrange;
+    protected double zrange;
 
-    protected float quadx[][];
-    protected float quady[][];
-    protected float quadz[][];
+    protected double quadx[][];
+    protected double quady[][];
+    protected double quadz[][];
 
-    protected float normx[];
-    protected float normy[];
-    protected float normz[];
+    protected double normx[];
+    protected double normy[];
+    protected double normz[];
 
-    protected float axeXx[][];
-    protected float axeXy[][];
-    protected float axeXz[][];
-    protected float axeYx[][];
-    protected float axeYy[][];
-    protected float axeYz[][];
-    protected float axeZx[][];
-    protected float axeZy[][];
-    protected float axeZz[][];
+    protected double axeXx[][];
+    protected double axeXy[][];
+    protected double axeXz[][];
+    protected double axeYx[][];
+    protected double axeYy[][];
+    protected double axeYz[][];
+    protected double axeZx[][];
+    protected double axeZy[][];
+    protected double axeZz[][];
 
     protected int axeXquads[][];
     protected int axeYquads[][];

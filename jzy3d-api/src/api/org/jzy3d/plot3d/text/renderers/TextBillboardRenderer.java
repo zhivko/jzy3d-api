@@ -78,10 +78,10 @@ public class TextBillboardRenderer extends AbstractTextRenderer implements IText
     public void glRaster(GL gl, Coord3d position, Color color) {
         if (gl.isGL2()) {
             gl.getGL2().glColor3f(color.r, color.g, color.b);
-            gl.getGL2().glRasterPos3f(position.x, position.y, position.z);
+            gl.getGL2().glRasterPos3d(position.x, position.y, position.z);
         } else {
             GLES2CompatUtils.glColor3f(color.r, color.g, color.b);
-            GLES2CompatUtils.glRasterPos3f(position.x, position.y, position.z);
+            GLES2CompatUtils.glRasterPos3f((float)position.x, (float)position.y, (float)position.z);
         }
     }
 

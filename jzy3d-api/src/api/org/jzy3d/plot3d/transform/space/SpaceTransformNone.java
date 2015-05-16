@@ -8,7 +8,7 @@ package org.jzy3d.plot3d.transform.space;
 public class SpaceTransformNone implements SpaceTransform {
 
 	@Override
-	public float compute(float value) {
+	public double compute(double value) {
 		return value;
 	}
 

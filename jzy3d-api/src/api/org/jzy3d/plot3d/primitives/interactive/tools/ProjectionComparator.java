@@ -5,8 +5,8 @@ import java.util.Comparator;
 public class ProjectionComparator implements Comparator<IProjection>{
 	@Override
 	public int compare(IProjection p1, IProjection p2) {
-		float dist1 = p1.deapness();
-		float dist2 = p2.deapness();
+		double dist1 = p1.deapness();
+		double dist2 = p2.deapness();
 		if(dist1 == dist2)
 			return 0;
 		else if(dist1 < dist2)

@@ -30,12 +30,12 @@ public class TranslateDrawable implements Transformer {
     public void translateTo(GL gl, Coord3d center, boolean reverse) {
         if (gl.isGLES()) {
             float reverseCoef = (reverse ? -1.0f : 1.0f);
-            GLES2CompatUtils.glTranslatef(reverseCoef * center.x / 2, reverseCoef * center.y / 2, reverseCoef * center.z / 2);
+            GLES2CompatUtils.glTranslatef((float)(reverseCoef * center.x / 2), (float)(reverseCoef * center.y / 2), (float)(reverseCoef * center.z / 2));
         } else {
             if (reverse)
-                gl.getGL2().glTranslatef(-center.x / 2, -center.y / 2, -center.z / 2);
+                gl.getGL2().glTranslated(-center.x / 2, -center.y / 2, -center.z / 2);
             else
-                gl.getGL2().glTranslatef(center.x / 2, center.y / 2, center.z / 2);
+                gl.getGL2().glTranslated(center.x / 2, center.y / 2, center.z / 2);
         }
     }
 

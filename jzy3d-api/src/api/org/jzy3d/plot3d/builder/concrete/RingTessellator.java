@@ -14,7 +14,7 @@ import org.jzy3d.plot3d.primitives.Shape;
 
 
 public class RingTessellator extends OrthonormalTessellator{
-	public RingTessellator(float ringMin, float ringMax, ColorMapper cmap, Color factor){
+	public RingTessellator(double ringMin, double ringMax, ColorMapper cmap, Color factor){
 		this.ringMin = ringMin;
 		this.ringMax = ringMax;
 		this.cmap    = cmap;
@@ -28,7 +28,7 @@ public class RingTessellator extends OrthonormalTessellator{
 
 	
 	@Override
-    public AbstractComposite build(float[] x, float[] y, float[] z) {
+    public AbstractComposite build(double[] x, double[] y, double[] z) {
 		setData(x, y, z);
 		Shape s = new Shape();
 		s.add(getInterpolatedRingPolygons());
@@ -84,7 +84,7 @@ public class RingTessellator extends OrthonormalTessellator{
 				p[2].rgb.mul( factor ); 
 				p[3].rgb.mul( factor ); 
 				
-				float[] radius = new float[p.length];
+				double[] radius = new double[p.length];
 				for(int i=0; i<p.length; i++)
 					radius[i] = radius2d(p[i]);
 								
@@ -107,7 +107,7 @@ public class RingTessellator extends OrthonormalTessellator{
 				else{
 					Polygon polygon = new Polygon();
 					Point intersection; // generated point
-					float ringRadius;
+					double ringRadius;
 					
 					int []    seq  = {0,1,2,3,0};
 					boolean[] done = new boolean[4];
@@ -177,29 +177,29 @@ public class RingTessellator extends OrthonormalTessellator{
 	
 	
 	/** Indicates which point lies inside and outside the given min and max radius.*/
-	protected boolean[] isInside(Point[] p, float [] radius, float minRadius, float maxRadius){
+	protected boolean[] isInside(Point[] p, double [] radius, double minRadius, double maxRadius){
 		boolean[] isIn = new boolean[4];
 		
-		isIn[0] = !Float.isNaN(p[0].xyz.z) && radius[0] < maxRadius && radius[0] >= minRadius;
-		isIn[1] = !Float.isNaN(p[1].xyz.z) && radius[1] < maxRadius && radius[1] >= minRadius;
-		isIn[2] = !Float.isNaN(p[2].xyz.z) && radius[2] < maxRadius && radius[2] >= minRadius;
-		isIn[3] = !Float.isNaN(p[3].xyz.z) && radius[3] < maxRadius && radius[3] >= minRadius;
+		isIn[0] = !Double.isNaN(p[0].xyz.z) && radius[0] < maxRadius && radius[0] >= minRadius;
+		isIn[1] = !Double.isNaN(p[1].xyz.z) && radius[1] < maxRadius && radius[1] >= minRadius;
+		isIn[2] = !Double.isNaN(p[2].xyz.z) && radius[2] < maxRadius && radius[2] >= minRadius;
+		isIn[3] = !Double.isNaN(p[3].xyz.z) && radius[3] < maxRadius && radius[3] >= minRadius;
 		
 		return isIn;
 	}
 	
-	protected float radius2d(Point p){
-		return (float)Math.sqrt(p.xyz.x*p.xyz.x + p.xyz.y*p.xyz.y);
+	protected double radius2d(Point p){
+		return (double)Math.sqrt(p.xyz.x*p.xyz.x + p.xyz.y*p.xyz.y);
 	}
 	
 	/**
 	 * Return a point that is the intersection between a segment and a circle
 	 * @throws ArithmeticException if points do not stand on an squared (orthonormal) grid.
 	 */
-	private Point findPoint(Point p1, Point p2, float ringRadius){		
+	private Point findPoint(Point p1, Point p2, double ringRadius){		
 		// We know that the seeked point is on a horizontal or vertial line
-		float x3, y3, z3;
-		float w1, w2;
+		double x3, y3, z3;
+		double w1, w2;
 		double alpha;
 		
 		// We know x3 and radius and seek y3, using intermediate alpha
@@ -208,21 +208,21 @@ public class RingTessellator extends OrthonormalTessellator{
 			alpha = Math.acos(x3/ringRadius);
 			
 			if(p1.xyz.y<0 && p2.xyz.y<0)
-				y3 = -(float)Math.sin(alpha)*ringRadius;
+				y3 = -(double)Math.sin(alpha)*ringRadius;
 			else if(p1.xyz.y>0 && p2.xyz.y>0)
-				y3 =  (float)Math.sin(alpha)*ringRadius;
+				y3 =  (double)Math.sin(alpha)*ringRadius;
 			else if(p1.xyz.y==-p2.xyz.y)
 				y3 = 0; // ne peut pas arriver
 			else
 				throw new ArithmeticException(("no alignement between p1(" +p1.xyz.x + "," + p1.xyz.y + "," + p1.xyz.z + ") and p2(" +p2.xyz.x + "," + p2.xyz.y + "," + p2.xyz.z + ")"));
 			
 			// and now get z3
-			if(!Float.isNaN(p1.xyz.z) && Float.isNaN(p2.xyz.z))
+			if(!Double.isNaN(p1.xyz.z) && Double.isNaN(p2.xyz.z))
 				z3 = p1.xyz.z;
-			else if(Float.isNaN(p1.xyz.z) && !Float.isNaN(p2.xyz.z))
+			else if(Double.isNaN(p1.xyz.z) && !Double.isNaN(p2.xyz.z))
 				z3 = p2.xyz.z;
-			else if(!Float.isNaN(p1.xyz.z) && !Float.isNaN(p2.xyz.z)){					
-				w2 = (float)( Math.sqrt( (x3      -p1.xyz.x)*(x3      -p1.xyz.x) + (y3      -p1.xyz.y)*(y3      -p1.xyz.y) )
+			else if(!Double.isNaN(p1.xyz.z) && !Double.isNaN(p2.xyz.z)){					
+				w2 = (double)( Math.sqrt( (x3      -p1.xyz.x)*(x3      -p1.xyz.x) + (y3      -p1.xyz.y)*(y3      -p1.xyz.y) )
 				            / Math.sqrt( (p2.xyz.x-p1.xyz.x)*(p2.xyz.x-p1.xyz.x) + (p2.xyz.y-p1.xyz.y)*(p2.xyz.y-p1.xyz.y) ));
 				w1 = 1-w2;
 				z3 = w1*p1.xyz.z+w2*p2.xyz.z;
@@ -236,21 +236,21 @@ public class RingTessellator extends OrthonormalTessellator{
 			alpha = Math.asin(y3/ringRadius);
 			
 			if(p1.xyz.x<0 && p2.xyz.x<0)
-				x3 = -(float)Math.cos(alpha)*ringRadius;
+				x3 = -(double)Math.cos(alpha)*ringRadius;
 			else if(p1.xyz.x>0 && p2.xyz.x>0)
-				x3 =  (float)Math.cos(alpha)*ringRadius;
+				x3 =  (double)Math.cos(alpha)*ringRadius;
 			else if(p1.xyz.x==-p2.xyz.x)
 				x3 = 0; // ne peut pas arriver
 			else
 				throw new ArithmeticException(("no alignement between p1(" +p1.xyz.x + "," + p1.xyz.y + "," + p1.xyz.z + ") and p2(" +p2.xyz.x + "," + p2.xyz.y + "," + p2.xyz.z + ")"));
 			
 			// and now get z3
-			if(!Float.isNaN(p1.xyz.z) && Float.isNaN(p2.xyz.z))
+			if(!Double.isNaN(p1.xyz.z) && Double.isNaN(p2.xyz.z))
 				z3 = p1.xyz.z;
-			else if(Float.isNaN(p1.xyz.z) && !Float.isNaN(p2.xyz.z))
+			else if(Double.isNaN(p1.xyz.z) && !Double.isNaN(p2.xyz.z))
 				z3 = p2.xyz.z;
-			else if(!Float.isNaN(p1.xyz.z) && !Float.isNaN(p2.xyz.z)){		
-				w2 = (float)( Math.sqrt( (x3      -p1.xyz.x)*(x3      -p1.xyz.x) + (y3      -p1.xyz.y)*(y3      -p1.xyz.y) )
+			else if(!Double.isNaN(p1.xyz.z) && !Double.isNaN(p2.xyz.z)){		
+				w2 = (double)( Math.sqrt( (x3      -p1.xyz.x)*(x3      -p1.xyz.x) + (y3      -p1.xyz.y)*(y3      -p1.xyz.y) )
 			                / Math.sqrt( (p2.xyz.x-p1.xyz.x)*(p2.xyz.x-p1.xyz.x) + (p2.xyz.y-p1.xyz.y)*(p2.xyz.y-p1.xyz.y) ));
 				w1 = 1-w2;
 				z3 = w1*p1.xyz.z+w2*p2.xyz.z;
@@ -267,8 +267,8 @@ public class RingTessellator extends OrthonormalTessellator{
 	
 	/************************************************************************************************/
 	
-	protected float ringMin;
-	protected float ringMax;
+	protected double ringMin;
+	protected double ringMax;
 	protected ColorMapper cmap;
 	protected Color factor;
 }

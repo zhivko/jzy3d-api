@@ -28,8 +28,8 @@ public class AxeYLineAnnotation implements AxeAnnotation {
         GLES2CompatUtils.glBegin(GL.GL_LINE_STRIP);
         GLES2CompatUtils.glLineWidth(width);
         GLES2CompatUtils.glColor4f(color.r, color.g, color.b, color.a);
-        GLES2CompatUtils.glVertex3f(value, yrange.getMin(), 0);
-        GLES2CompatUtils.glVertex3f(value, yrange.getMax(), 0);
+        GLES2CompatUtils.glVertex3f(value, (float)yrange.getMin(), 0);
+        GLES2CompatUtils.glVertex3f(value, (float)yrange.getMax(), 0);
         GLES2CompatUtils.glEnd();
     }
 
@@ -37,8 +37,8 @@ public class AxeYLineAnnotation implements AxeAnnotation {
         gl.getGL2().glLineWidth(width);
         gl.getGL2().glBegin(GL.GL_LINE_STRIP);
         gl.getGL2().glColor4f(color.r, color.g, color.b, color.a);
-        gl.getGL2().glVertex3f(value, yrange.getMin()-yrange.getRange()/30, zrange.getMin()-2);
-        gl.getGL2().glVertex3f(value, yrange.getMax()+yrange.getRange()/30, zrange.getMin()-2);
+        gl.getGL2().glVertex3d(value, yrange.getMin()-yrange.getRange()/30, zrange.getMin()-2);
+        gl.getGL2().glVertex3d(value, yrange.getMax()+yrange.getRange()/30, zrange.getMin()-2);
         
         //System.out.println("x=" + value +  " y:" + yrange);
         gl.getGL2().glEnd();

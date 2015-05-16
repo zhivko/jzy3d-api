@@ -21,8 +21,8 @@ public class Coord3d implements Serializable{
     }
     
     public static Range getZRange(List<Coord3d> coords) {
-        float min = Float.POSITIVE_INFINITY;
-        float max = Float.NEGATIVE_INFINITY;
+        double min = Double.POSITIVE_INFINITY;
+        double max = Double.NEGATIVE_INFINITY;
         
         for(Coord3d c: coords){
             if(c.z>max)
@@ -35,9 +35,9 @@ public class Coord3d implements Serializable{
 
 
     /** The origin is a Coord3d having value 0 for each dimension. */
-    public static final Coord3d ORIGIN = new Coord3d(0.0f, 0.0f, 0.0f);
+    public static final Coord3d ORIGIN = new Coord3d(0.0, 0.0, 0.0);
     /** The origin is a Coord3d having value 1 for each dimension. */
-    public static final Coord3d IDENTITY = new Coord3d(1.0f, 1.0f, 1.0f);
+    public static final Coord3d IDENTITY = new Coord3d(1.0, 1.0, 1.0);
     /** An invalid Coord2d has value NaN for each dimension. */
     public static final Coord3d INVALID = new Coord3d(Float.NaN, Float.NaN, Float.NaN);
 
@@ -75,9 +75,9 @@ public class Coord3d implements Serializable{
      * elevation, and z is range.
      */
     public Coord3d(double xi, double yi, double zi) {
-        x = (float) xi;
-        y = (float) yi;
-        z = (float) zi;
+        x = xi;
+        y = yi;
+        z = zi;
     }
 
     public Coord3d set(Coord3d c2) {
@@ -87,7 +87,7 @@ public class Coord3d implements Serializable{
         return this;
     }
 
-    public Coord3d set(float x, float y, float z) {
+    public Coord3d set(double x, double y, double z) {
         this.x = x;
         this.y = y;
         this.z = z;
@@ -135,7 +135,7 @@ public class Coord3d implements Serializable{
      * @param value
      * @return the result Coord3d
      */
-    public Coord3d add(float value) {
+    public Coord3d add(double value) {
         return new Coord3d(x + value, y + value, z + value);
     }
 
@@ -315,16 +315,16 @@ public class Coord3d implements Serializable{
 
     /**************************************************************/
 
-    public float magSquared() {
+    public double magSquared() {
         return x * x + y * y + z * z;
     }
 
-    public Coord3d getNormalizedTo(float len) {
+    public Coord3d getNormalizedTo(double len) {
         return clone().normalizeTo(len);
     }
 
-    public Coord3d normalizeTo(float len) {
-        float mag = (float) Math.sqrt(x * x + y * y + z * z);
+    public Coord3d normalizeTo(double len) {
+        double mag = Math.sqrt(x * x + y * y + z * z);
         if (mag > 0) {
             mag = len / mag;
             x *= mag;
@@ -334,7 +334,7 @@ public class Coord3d implements Serializable{
         return this;
     }
 
-    public final float dot(Coord3d v) {
+    public final double dot(Coord3d v) {
         return x * v.x + y * v.y + z * v.z;
     }
 
@@ -357,14 +357,14 @@ public class Coord3d implements Serializable{
      * @param axis  unit vector describing an axis of rotation
      * @return rotated copy of the original vector
      */
-    public final Coord3d rotate(float angleDeg, Coord3d axis) {
-        float angleRad = (float) Math.toRadians(angleDeg);
-        float s = (float) Math.sin(angleRad);
-        float c = (float) Math.cos(angleRad);
+    public final Coord3d rotate(double angleDeg, Coord3d axis) {
+        double angleRad = Math.toRadians(angleDeg);
+        double s = Math.sin(angleRad);
+        double c = Math.cos(angleRad);
         Coord3d v = this;
         Coord3d k = axis.normalizeTo(1f);
 
-        float kdotv = k.dot(v);
+        double kdotv = k.dot(v);
         Coord3d kXv = k.cross(v);
         return new Coord3d(
                 v.x * c + kXv.x * s + k.x * kdotv * (1 - c),
@@ -372,7 +372,7 @@ public class Coord3d implements Serializable{
                 v.z * c + kXv.z * s + k.z * kdotv * (1 - c));
     }
 
-    public final Coord3d interpolateTo(Coord3d v, float f) {
+    public final Coord3d interpolateTo(Coord3d v, double f) {
         return new Coord3d(x + (v.x - x) * f, y + (v.y - y) * f, z + (v.z - z) * f);
     }
 
@@ -385,8 +385,8 @@ public class Coord3d implements Serializable{
     }
 
     /** Return an array representation of this coordinate. */
-    public float[] toArray() {
-        float[] array = { x, y, z };
+    public double[] toArray() {
+        double[] array = { x, y, z };
         return array;
     }
 
@@ -396,9 +396,9 @@ public class Coord3d implements Serializable{
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + Float.floatToIntBits(x);
-		result = prime * result + Float.floatToIntBits(y);
-		result = prime * result + Float.floatToIntBits(z);
+		result = prime * result + (int)Double.doubleToLongBits(x);
+		result = prime * result + (int)Double.doubleToLongBits(y);
+		result = prime * result + (int)Double.doubleToLongBits(z);
 		return result;
 	}
 
@@ -410,15 +410,15 @@ public class Coord3d implements Serializable{
 		if (!(obj instanceof Coord3d)) return false;
 
 		Coord3d other = (Coord3d) obj;
-		if (Float.floatToIntBits(x) != Float.floatToIntBits(other.x)) return false;
-		if (Float.floatToIntBits(y) != Float.floatToIntBits(other.y)) return false;
-		if (Float.floatToIntBits(z) != Float.floatToIntBits(other.z)) return false;
+		if (x != other.y) return false;
+		if (y != other.y) return false;
+		if (z != other.z) return false;
 		return true;
 	}
 
     /**************************************************************/
 
-    public float x;
-    public float y;
-    public float z;
+    public double x;
+    public double y;
+    public double z;
 }

@@ -167,31 +167,31 @@ public class View {
         // fireControllerEvent(ControllerType.ROTATE, eye);
     }
 
-    public void shift(final float factor) {
+    public void shift(final double factor) {
         shift(factor, true);
     }
 
-    public void shift(final float factor, boolean updateView) {
+    public void shift(final double factor, boolean updateView) {
         org.jzy3d.maths.Scale current = getScale();
         org.jzy3d.maths.Scale newScale = current.add(factor * current.getRange());
         setScale(newScale, updateView);
         // fireControllerEvent(ControllerType.SHIFT, newScale);
     }
 
-    public void zoom(final float factor) {
+    public void zoom(final double factor) {
         zoom(factor, true);
     }
 
-    public void zoom(final float factor, boolean updateView) {
+    public void zoom(final double factor, boolean updateView) {
         org.jzy3d.maths.Scale current = getScale();
         double range = current.getMax() - current.getMin();
 
         if (range <= 0)
             return;
 
-        float center = (current.getMax() + current.getMin()) / 2;
-        float zmin = center + (current.getMin() - center) * (factor);
-        float zmax = center + (current.getMax() - center) * (factor);
+        double center = (current.getMax() + current.getMin()) / 2;
+        double zmin = center + (current.getMin() - center) * (factor);
+        double zmax = center + (current.getMax() - center) * (factor);
 
         // set min/max according to bounds
         org.jzy3d.maths.Scale scale = null;
@@ -208,17 +208,17 @@ public class View {
         }
     }
 
-    public void zoomX(final float factor) {
+    public void zoomX(final double factor) {
         zoomX(factor, true);
     }
 
-    public void zoomX(final float factor, boolean updateView) {
+    public void zoomX(final double factor, boolean updateView) {
         double range = getBounds().getXmax() - getBounds().getXmin();
         if (range <= 0)
             return;
-        float center = (getBounds().getXmax() + getBounds().getXmin()) / 2;
-        float min = center + (getBounds().getXmin() - center) * factor;
-        float max = center + (getBounds().getXmax() - center) * factor;
+        double center = (getBounds().getXmax() + getBounds().getXmin()) / 2;
+        double min = center + (getBounds().getXmin() - center) * factor;
+        double max = center + (getBounds().getXmax() - center) * factor;
 
         org.jzy3d.maths.Scale scale = null;
         if (min < max)
@@ -238,17 +238,17 @@ public class View {
         }
     }
 
-    public void zoomY(final float factor) {
+    public void zoomY(final double factor) {
         zoomY(factor, true);
     }
 
-    public void zoomY(final float factor, boolean updateView) {
+    public void zoomY(final double factor, boolean updateView) {
         double range = getBounds().getYmax() - getBounds().getYmin();
         if (range <= 0)
             return;
-        float center = (getBounds().getYmax() + getBounds().getYmin()) / 2;
-        float min = center + (getBounds().getYmin() - center) * factor;
-        float max = center + (getBounds().getYmax() - center) * factor;
+        double center = (getBounds().getYmax() + getBounds().getYmin()) / 2;
+        double min = center + (getBounds().getYmin() - center) * factor;
+        double max = center + (getBounds().getYmax() - center) * factor;
 
         org.jzy3d.maths.Scale scale = null;
         if (min < max)
@@ -268,17 +268,17 @@ public class View {
         }
     }
 
-    public void zoomZ(final float factor) {
+    public void zoomZ(final double factor) {
         zoomZ(factor, true);
     }
 
-    public void zoomZ(final float factor, boolean updateView) {
+    public void zoomZ(final double factor, boolean updateView) {
         double range = getBounds().getZmax() - getBounds().getZmin();
         if (range <= 0)
             return;
-        float center = (getBounds().getZmax() + getBounds().getZmin()) / 2;
-        float min = center + (getBounds().getZmin() - center) * factor;
-        float max = center + (getBounds().getZmax() - center) * factor;
+        double center = (getBounds().getZmax() + getBounds().getZmin()) / 2;
+        double min = center + (getBounds().getZmin() - center) * factor;
+        double max = center + (getBounds().getZmax() - center) * factor;
 
         org.jzy3d.maths.Scale scale = null;
         if (min < max)
@@ -642,10 +642,10 @@ public class View {
         }
         
         // Compute factors
-        float xLen = 1;
-        float yLen = 1;
-        float zLen = 1;
-        float lmax = 1;
+        double xLen = 1;
+        double yLen = 1;
+        double zLen = 1;
+        double lmax = 1;
         
        if(bounds!=null){
             xLen = spaceTransformer.getX().compute(bounds.getXmax()) - spaceTransformer.getX().compute(bounds.getXmin());
@@ -654,19 +654,19 @@ public class View {
             lmax = Math.max(Math.max(xLen, yLen), zLen);
         }
 
-        if (Float.isInfinite(xLen) || Float.isNaN(xLen) || xLen == 0)
+        if (Double.isInfinite(xLen) || Double.isNaN(xLen) || xLen == 0)
             xLen = 1;
-        if (Float.isInfinite(yLen) || Float.isNaN(yLen) || yLen == 0)
+        if (Double.isInfinite(yLen) || Double.isNaN(yLen) || yLen == 0)
             yLen = 1;
-        if (Float.isInfinite(zLen) || Float.isNaN(zLen) || zLen == 0)
+        if (Double.isInfinite(zLen) || Double.isNaN(zLen) || zLen == 0)
             zLen = 1;
-        if (Float.isInfinite(lmax) || Float.isNaN(lmax) || lmax == 0)
+        if (Double.isInfinite(lmax) || Double.isNaN(lmax) || lmax == 0)
             lmax = 1;
 
         // Return a scaler
-        float xscale = (float)((double)lmax / (double)xLen);
-        float yscale = (float)((double)lmax / (double)yLen);
-        float zscale = (float)((double)lmax / (double)zLen);
+        double xscale = lmax / xLen;
+        double yscale = lmax / yLen;
+        double zscale = lmax / zLen;
         return new Coord3d(xscale, yscale, zscale);
     }
 
@@ -927,7 +927,7 @@ public class View {
     /**
      * To be implemented (see AWTView)
      */
-    public void renderBackground(GL gl, GLU glu2, float f, float g) {
+    public void renderBackground(GL gl, GLU glu2, double f, double g) {
     }
 
     /**
@@ -940,7 +940,7 @@ public class View {
         renderScene(gl, glu, new ViewportConfiguration(canvas.getRendererWidth(), canvas.getRendererHeight()));
     }
 
-    public void renderScene(GL gl, GLU glu, float left, float right) {
+    public void renderScene(GL gl, GLU glu, double left, double right) {
         ViewportConfiguration vc = ViewportBuilder.column(canvas.getRendererWidth(), canvas.getRendererHeight(), left, right);
         renderScene(gl, glu, vc);
     }
@@ -981,13 +981,13 @@ public class View {
     }
 
     public void updateCamera(GL gl, GLU glu, ViewportConfiguration viewport, BoundingBox3d boundsScaled) {
-        //before LOG was : (float)bounds.getRadius() * factorViewPointDistance;
-        float sceneRadius = (float) boundsScaled.getTransformedRadius(spaceTransformer);
+        //before LOG was : (double)bounds.getRadius() * factorViewPointDistance;
+        double sceneRadius = (double) boundsScaled.getTransformedRadius(spaceTransformer);
         updateCamera(gl, glu, viewport, boundsScaled, sceneRadius);
     }
 
 
-    public void updateCamera(GL gl, GLU glu, ViewportConfiguration viewport, BoundingBox3d bounds, float sceneRadiusScaled) {
+    public void updateCamera(GL gl, GLU glu, ViewportConfiguration viewport, BoundingBox3d bounds, double sceneRadiusScaled) {
         viewpoint.z = sceneRadiusScaled  * factorViewPointDistance;
         cam.setTarget(computeCameraTarget());
         cam.setUp(computeCameraUpAndTriggerEvents());
@@ -1025,8 +1025,8 @@ public class View {
     public static Coord3d computeCameraEyeTop(Coord3d viewpoint, Coord3d target) {
         Coord3d eye;
         eye = viewpoint;
-        eye.x = -(float) Math.PI / 2; // on x
-        eye.y = (float) Math.PI / 2; // on top
+        eye.x = -Math.PI / 2; // on x
+        eye.y = Math.PI / 2; // on top
         eye = eye.cartesian().add(target);
         return eye;
     }
@@ -1040,7 +1040,7 @@ public class View {
     public Coord3d computeCameraUpAndTriggerEvents() {
         Coord3d up;
 
-        if (Math.abs(viewpoint.y) == (float) Math.PI / 2) {
+        if (Math.abs(viewpoint.y) == (double) Math.PI / 2) {
             up = computeCameraUp();
 
             // handle "on-top" events
@@ -1073,13 +1073,13 @@ public class View {
 
     public void computeCameraRenderingSphereRadius(GL gl, GLU glu, ViewportConfiguration viewport, BoundingBox3d bounds) {
         if (viewmode == ViewPositionMode.TOP) {
-            float xdiam = bounds.getXRange().getRange();
-            float ydiam = bounds.getYRange().getRange();
-            float radius = Math.max(xdiam, ydiam) / 2;
+            double xdiam = bounds.getXRange().getRange();
+            double ydiam = bounds.getYRange().getRange();
+            double radius = Math.max(xdiam, ydiam) / 2;
             cam.setRenderingSphereRadius(radius);
             correctCameraPositionForIncludingTextLabels(gl, glu, viewport); 
         } else {
-            cam.setRenderingSphereRadius((float)bounds.getTransformedRadius(spaceTransformer));
+            cam.setRenderingSphereRadius((double)bounds.getTransformedRadius(spaceTransformer));
         }
     }
 
@@ -1158,7 +1158,7 @@ public class View {
 
     protected GLU glu;
 
-    public static float STRETCH_RATIO = 0.25f;
+    public static double STRETCH_RATIO = 0.25f;
 
     /** force to have all object maintained in screen, meaning axebox won't always keep the same size. */
     protected boolean MAINTAIN_ALL_OBJECTS_IN_VIEW = false; 
@@ -1194,7 +1194,7 @@ public class View {
     protected List<IViewLifecycleEventListener> viewLifecycleListeners;
     protected boolean wasOnTopAtLastRendering;
 
-    protected static final float PI_div2 = (float) Math.PI / 2;
+    protected static final double PI_div2 = (double) Math.PI / 2;
 
     public static final Coord3d DEFAULT_VIEW = new Coord3d(Math.PI / 3, Math.PI / 3, 2000);
 
@@ -1214,7 +1214,7 @@ public class View {
      * radius of the scene bounds. Changing this value also change the camera
      * clipping planes.
      */
-    protected float factorViewPointDistance = 2;
+    protected double factorViewPointDistance = 2;
 
     /** A slave view won't clear its color and depth buffer before rendering */
     protected boolean slave = false;

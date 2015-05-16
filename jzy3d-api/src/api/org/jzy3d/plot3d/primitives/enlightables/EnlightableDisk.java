@@ -23,8 +23,8 @@ public class EnlightableDisk extends AbstractEnlightable implements
 	}
 
 	/** Initialize a cylinder with the given parameters. */
-	public EnlightableDisk(Coord3d position, float radiusInner,
-			float radiusOuter, int slices, int loops, Color color,
+	public EnlightableDisk(Coord3d position, double radiusInner,
+			double radiusOuter, int slices, int loops, Color color,
 			boolean faceup) {
 		super();
 		bbox = new BoundingBox3d();
@@ -47,9 +47,9 @@ public class EnlightableDisk extends AbstractEnlightable implements
 		doTransform(gl, glu, cam);
 
 		if (gl.isGL2()) {
-			gl.getGL2().glTranslatef(x, y, z);
+			gl.getGL2().glTranslated(x, y, z);
 		} else {
-			GLES2CompatUtils.glTranslatef(x, y, z);
+			GLES2CompatUtils.glTranslatef((float)x, (float)y, (float)z);
 		}
 
 		applyMaterial(gl);
@@ -66,7 +66,7 @@ public class EnlightableDisk extends AbstractEnlightable implements
 				}
 
 				gl.getGL2().glPolygonMode(GL.GL_FRONT_AND_BACK, GL2GL3.GL_FILL);
-				gl.getGL2().glNormal3f(norm.x, norm.y, norm.z);
+				gl.getGL2().glNormal3d(norm.x, norm.y, norm.z);
 				gl.getGL2().glColor4f(color.r, color.g, color.b, color.a);
 				glu.gluDisk(qobj, radiusInner, radiusOuter, slices, loops);
 
@@ -76,7 +76,7 @@ public class EnlightableDisk extends AbstractEnlightable implements
 			}
 			if (wfstatus) {
 				gl.getGL2().glPolygonMode(GL.GL_FRONT_AND_BACK, GL2GL3.GL_LINE);
-				gl.getGL2().glNormal3f(norm.x, norm.y, norm.z);
+				gl.getGL2().glNormal3d(norm.x, norm.y, norm.z);
 				gl.getGL2().glColor4f(wfcolor.r, wfcolor.g, wfcolor.b, wfcolor.a);
 				glu.gluDisk(qobj, radiusInner, radiusOuter, slices, loops);
 			}
@@ -88,7 +88,7 @@ public class EnlightableDisk extends AbstractEnlightable implements
 				}
 
 				GLES2CompatUtils.glPolygonMode(GL.GL_FRONT_AND_BACK, GL2GL3.GL_FILL);
-				GLES2CompatUtils.glNormal3f(norm.x, norm.y, norm.z);
+				GLES2CompatUtils.glNormal3f((float)norm.x, (float)norm.y, (float)norm.z);
 				GLES2CompatUtils.glColor4f(color.r, color.g, color.b, color.a);
 				glu.gluDisk(qobj, radiusInner, radiusOuter, slices, loops);
 
@@ -98,7 +98,7 @@ public class EnlightableDisk extends AbstractEnlightable implements
 			}
 			if (wfstatus) {
 				GLES2CompatUtils.glPolygonMode(GL.GL_FRONT_AND_BACK, GL2GL3.GL_LINE);
-				GLES2CompatUtils.glNormal3f(norm.x, norm.y, norm.z);
+				GLES2CompatUtils.glNormal3f((float)norm.x, (float)norm.y, (float)norm.z);
 				GLES2CompatUtils.glColor4f(wfcolor.r, wfcolor.g, wfcolor.b, wfcolor.a);
 				glu.gluDisk(qobj, radiusInner, radiusOuter, slices, loops);
 			}
@@ -123,7 +123,7 @@ public class EnlightableDisk extends AbstractEnlightable implements
 
 	/* */
 
-	public void setData(Coord3d position, float radiusInner, float radiusOuter,
+	public void setData(Coord3d position, double radiusInner, double radiusOuter,
 			int slices, int loops) {
 		setPosition(position);
 		setVolume(radiusInner, radiusOuter);
@@ -138,7 +138,7 @@ public class EnlightableDisk extends AbstractEnlightable implements
 		updateBounds();
 	}
 
-	public void setVolume(float radiusInner, float radiusOuter) {
+	public void setVolume(double radiusInner, double radiusOuter) {
 		if (radiusOuter < radiusInner)
 			throw new IllegalArgumentException(
 					"inner radius must be smaller than outer radius");
@@ -171,14 +171,14 @@ public class EnlightableDisk extends AbstractEnlightable implements
 
 	/********************************************************/
 
-	private float x;
-	private float y;
-	private float z;
+	private double x;
+	private double y;
+	private double z;
 
 	private int slices;
 	private int loops;
-	private float radiusInner;
-	private float radiusOuter;
+	private double radiusInner;
+	private double radiusOuter;
 
 	private Color color;
 

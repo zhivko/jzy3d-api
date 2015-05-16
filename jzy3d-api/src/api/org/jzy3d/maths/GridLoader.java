@@ -56,7 +56,7 @@ public class GridLoader implements IColorMappable{
 	 * <li>a set of polygon describing a ring with smooth contour
 	 * <li>
 	 */
-	public GridLoader(float x[], float y[], float z[]){
+	public GridLoader(double x[], double y[], double z[]){
 		bbox = new BoundingBox3d();
 		setData(x, y, z);
 	}
@@ -103,7 +103,7 @@ public class GridLoader implements IColorMappable{
 	 * @param z list of z coordinates
 	 * @throws an IllegalArgumentException if x, y , and z have not the same size
 	 */
-	protected void setData(float x[], float y[], float z[]){
+	protected void setData(double x[], double y[], double z[]){
 		if(x.length!=y.length || x.length!=z.length)
 			throw new IllegalArgumentException("GridLoader: x, y, and z arrays must agree in length.");
 		
@@ -111,11 +111,11 @@ public class GridLoader implements IColorMappable{
 		bbox.reset();
 		this.x = unique(x);
 		this.y = unique(y);
-		this.z = new float[this.x.length][this.y.length];
+		this.z = new double[this.x.length][this.y.length];
 		
 		for(int i=0; i<this.x.length; i++)
 			for(int j=0; j<this.y.length; j++)
-				this.z[i][j] = Float.NaN;
+				this.z[i][j] = Double.NaN;
 		
 		// Fill Z matrix and set surface minimum and maximum
 		boolean found;
@@ -136,15 +136,15 @@ public class GridLoader implements IColorMappable{
 	 * @param data input array.
 	 * @return a sorted array containing only one occurrence of each input value.
 	 */
-	private float [] unique(float[] data){
-		float [] copy = Array.clone(data);
+	private double [] unique(double[] data){
+		double [] copy = Array.clone(data);
 		Arrays.sort(copy);
 		
 		// count unique values
 		int nunique = 0;
-	    float last = Float.NaN;
+	    double last = Double.NaN;
 	    for(int i=0; i<copy.length; i++){
-	    	if(Float.isNaN(copy[i])){
+	    	if(Double.isNaN(copy[i])){
 	    		//System.out.println("Ignoring NaN value at " + i);
 	    	}
 	    	else if(copy[i] != last){
@@ -154,11 +154,11 @@ public class GridLoader implements IColorMappable{
 	    }
 	    
 	    // Fill a sorted unique array
-	    float [] result = new float[nunique];
-	    last = Float.NaN;
+	    double [] result = new double[nunique];
+	    last = Double.NaN;
 	    int r = 0;
 	    for(int d=0; d<copy.length; d++){
-	    	if(Float.isNaN(copy[d])){
+	    	if(Double.isNaN(copy[d])){
 	    		//System.out.println("Ignoring NaN value at " + d);
 	    	}
 	    	else if(copy[d] != last){
@@ -175,7 +175,7 @@ public class GridLoader implements IColorMappable{
 	 * Function returns true if the couple of data may be retrieved,
 	 * false otherwise (in this case, xi and yj remain unchanged).
 	 */
-	private boolean find(float[] x, float[] y, float vx, float vy){
+	private boolean find(double[] x, double[] y, double vx, double vy){
 
 		for(int i=0; i<x.length; i++)
 			for(int j=0; j<y.length; j++)
@@ -215,7 +215,7 @@ public class GridLoader implements IColorMappable{
 				p[2].rgb.mul(colorFactor);
 				p[3].rgb.mul(colorFactor);
 				
-				float[] radius = new float[p.length];
+				double[] radius = new double[p.length];
 				for(int i=0; i<p.length; i++)
 					radius[i] = radius2d(p[i]);
 								
@@ -245,14 +245,14 @@ public class GridLoader implements IColorMappable{
 	
 	/**************************************************************************************/
 	
-	public List<Polygon> getExtrapolatedRingPolygons(float ringMax, IColorMap cmap, Color colorFactor){
+	public List<Polygon> getExtrapolatedRingPolygons(double ringMax, IColorMap cmap, Color colorFactor){
 		//backup current coords and extrapolate
-		float[]   xbackup = x;
-		float[]   ybackup = y;
-		float[][] zbackup = z;
+		double[]   xbackup = x;
+		double[]   ybackup = y;
+		double[][] zbackup = z;
 		
 		// compute required extrapolation
-		float step = x[1] - x[0];
+		double step = x[1] - x[0];
 		int  nstep = x.length;
 		
 		int ENLARGE = 2;		
@@ -275,17 +275,17 @@ public class GridLoader implements IColorMappable{
 	/** Add extrapolated points on the grid. If the grid is too small for extrapolation, the arrays
 	 * are maximized */
 	public void extrapolate(int n){
-		float[]   xnew = new float[x.length+n*2];
-		float[]   ynew = new float[y.length+n*2];
-		float[][] znew = new float[x.length+n*2][y.length+n*2];
+		double[]   xnew = new double[x.length+n*2];
+		double[]   ynew = new double[y.length+n*2];
+		double[][] znew = new double[x.length+n*2][y.length+n*2];
 		
 		// assume x and y grid are allready sorted and create new grids
-		float xmin = x[0];
-		float xmax = x[x.length-1];
-		float xgap = x[1]-x[0];		
-		float ymin = y[0];
-		float ymax = y[y.length-1];
-		float ygap = y[1]-y[0];
+		double xmin = x[0];
+		double xmax = x[x.length-1];
+		double xgap = x[1]-x[0];		
+		double ymin = y[0];
+		double ymax = y[y.length-1];
+		double ygap = y[1]-y[0];
 		
 		for(int i=0; i<xnew.length; i++){
 			// --- x grid ---
@@ -300,7 +300,7 @@ public class GridLoader implements IColorMappable{
 			for(int j=0; j<ynew.length; j++){
 				if(j<n){ // fill before
 					ynew[j]    = ymin - (n-j) * ygap;
-					znew[i][j] = Float.NaN;
+					znew[i][j] = Double.NaN;
 				} 
 				else if( j>=n && j< (y.length+n) ){ // copy content
 					ynew[j]    = y[j-n];
@@ -309,18 +309,18 @@ public class GridLoader implements IColorMappable{
 					if(i>=n && i<x.length+n)
 						znew[i][j] = z[i-n][j-n];	
 					else
-						znew[i][j] = Float.NaN;
+						znew[i][j] = Double.NaN;
 				}
 				else if( j >= (y.length+n) ){ // fill after
 					ynew[j]    = ymax + (j-(y.length+n)+1) * ygap;
-					znew[i][j] = Float.NaN;
+					znew[i][j] = Double.NaN;
 				}
 			}
 		}
 		
 		// extrapolation
-		float olddiameter = xgap*(x.length    )/2;
-		float newdiameter = xgap*(x.length-1+n*2)/2;
+		double olddiameter = xgap*(x.length    )/2;
+		double newdiameter = xgap*(x.length-1+n*2)/2;
 		olddiameter *= olddiameter;
 		newdiameter *= newdiameter;
 		
@@ -330,7 +330,7 @@ public class GridLoader implements IColorMappable{
 		// start from center, and add extrapolated values iteratively on each quadrant
 		for(int i=xmiddle; i<xnew.length; i++){			
 			for(int j=ymiddle; j<ynew.length; j++){
-				float sqrad = xnew[i]*xnew[i]+ynew[j]*ynew[j]; // distance to center
+				double sqrad = xnew[i]*xnew[i]+ynew[j]*ynew[j]; // distance to center
 				
 				// ignore existing values
 				if(sqrad < olddiameter) 
@@ -350,7 +350,7 @@ public class GridLoader implements IColorMappable{
 				
 				// ignore values standing outside desired diameter
 				else //if(sqrad > newdiameter)
-					znew[i][j] = Float.NaN;	
+					znew[i][j] = Double.NaN;	
 			}
 		}
 		
@@ -360,18 +360,18 @@ public class GridLoader implements IColorMappable{
 		z = znew;
 	}
 	
-	private float getExtrapolatedZ(float[][] grid, int currentXi, int currentYi){
+	private double getExtrapolatedZ(double[][] grid, int currentXi, int currentYi){
 		int left   = currentXi-1>0              ? currentXi-1 : currentXi;
 		int right  = currentXi+1<grid.length    ? currentXi+1 : currentXi;
 		int bottom = currentYi-1>0              ? currentYi-1 : currentYi;
 		int up     = currentYi+1<grid[0].length ? currentYi+1 : currentYi;
 		
-		float cumval = 0;
+		double cumval = 0;
 		int   nval   = 0;
 		
 		for(int u=left; u<=right; u++)
 			for(int v=bottom; v<=up; v++)
-				if(!Float.isNaN(grid[u][v])){
+				if(!Double.isNaN(grid[u][v])){
 					cumval += grid[u][v];
 					nval   ++;
 				}
@@ -379,7 +379,7 @@ public class GridLoader implements IColorMappable{
 		if(nval>0)
 			return cumval/nval;
 		else
-			return Float.NaN;
+			return Double.NaN;
 	}
 
 	
@@ -414,7 +414,7 @@ public class GridLoader implements IColorMappable{
 	 * @param ringMax the maximum radius of this ring.
 	 * @param colorFactor a weighting factor for the color returned by the Colormap.
 	 */
-	public List<Polygon> getInterpolatedRingPolygons(float ringMin, float ringMax, IColorMap cmap, Color colorFactor){
+	public List<Polygon> getInterpolatedRingPolygons(double ringMin, double ringMax, IColorMap cmap, Color colorFactor){
 		List<Polygon> polygons = new ArrayList<Polygon>();
 		bbox.reset();
 		
@@ -440,7 +440,7 @@ public class GridLoader implements IColorMappable{
 				p[2].rgb.r*=colorFactor.r; p[2].rgb.g*=colorFactor.g; p[2].rgb.b*=colorFactor.b; p[2].rgb.a*=colorFactor.a;
 				p[3].rgb.r*=colorFactor.r; p[3].rgb.g*=colorFactor.g; p[3].rgb.b*=colorFactor.b; p[3].rgb.a*=colorFactor.a;
 				
-				float[] radius = new float[p.length];
+				double[] radius = new double[p.length];
 				for(int i=0; i<p.length; i++)
 					radius[i] = radius2d(p[i]);
 								
@@ -464,7 +464,7 @@ public class GridLoader implements IColorMappable{
 				else{
 					Polygon polygon = new Polygon();
 					Point intersection; // generated point
-					float ringRadius;
+					double ringRadius;
 					
 					int []    seq  = {0,1,2,3,0};
 					boolean[] done = new boolean[4];
@@ -540,29 +540,29 @@ public class GridLoader implements IColorMappable{
 	}
 	
 	/** Indicates which points lie inside and outside the given min and max radius.*/
-	private boolean[] isInside(Point[] p, float [] radius, float minRadius, float maxRadius){
+	private boolean[] isInside(Point[] p, double [] radius, double minRadius, double maxRadius){
 		boolean[] isIn = new boolean[4];
 		
-		isIn[0] = !Float.isNaN(p[0].xyz.z) && radius[0] < maxRadius && radius[0] >= minRadius;
-		isIn[1] = !Float.isNaN(p[1].xyz.z) && radius[1] < maxRadius && radius[1] >= minRadius;
-		isIn[2] = !Float.isNaN(p[2].xyz.z) && radius[2] < maxRadius && radius[2] >= minRadius;
-		isIn[3] = !Float.isNaN(p[3].xyz.z) && radius[3] < maxRadius && radius[3] >= minRadius;
+		isIn[0] = !Double.isNaN(p[0].xyz.z) && radius[0] < maxRadius && radius[0] >= minRadius;
+		isIn[1] = !Double.isNaN(p[1].xyz.z) && radius[1] < maxRadius && radius[1] >= minRadius;
+		isIn[2] = !Double.isNaN(p[2].xyz.z) && radius[2] < maxRadius && radius[2] >= minRadius;
+		isIn[3] = !Double.isNaN(p[3].xyz.z) && radius[3] < maxRadius && radius[3] >= minRadius;
 		
 		return isIn;
 	}
 	
-	private float radius2d(Point p){
-		return (float)Math.sqrt(p.xyz.x*p.xyz.x + p.xyz.y*p.xyz.y);
+	private double radius2d(Point p){
+		return (double)Math.sqrt(p.xyz.x*p.xyz.x + p.xyz.y*p.xyz.y);
 	}
 	
 	/**
 	 * Return a point that is the intersection between a segment and a circle
 	 * @throws ArithmeticException if points do not stand on an squared (orthonormal) grid.
 	 */
-	private Point findPoint(Point p1, Point p2, float ringRadius){		
+	private Point findPoint(Point p1, Point p2, double ringRadius){		
 		// We know that the seeked point is on a horizontal or vertial line
-		float x3, y3, z3;
-		float w1, w2;
+		double x3, y3, z3;
+		double w1, w2;
 		double alpha;
 		
 		// We know x3 and radius and seek y3, using intermediate alpha
@@ -571,21 +571,21 @@ public class GridLoader implements IColorMappable{
 			alpha = Math.acos(x3/ringRadius);
 			
 			if(p1.xyz.y<0 && p2.xyz.y<0)
-				y3 = -(float)Math.sin(alpha)*ringRadius;
+				y3 = -(double)Math.sin(alpha)*ringRadius;
 			else if(p1.xyz.y>0 && p2.xyz.y>0)
-				y3 =  (float)Math.sin(alpha)*ringRadius;
+				y3 =  (double)Math.sin(alpha)*ringRadius;
 			else if(p1.xyz.y==-p2.xyz.y)
 				y3 = 0; // ne peut pas arriver
 			else
 				throw new ArithmeticException(("no alignement between p1(" +p1.xyz.x + "," + p1.xyz.y + "," + p1.xyz.z + ") and p2(" +p2.xyz.x + "," + p2.xyz.y + "," + p2.xyz.z + ")"));
 			
 			// and now get z3
-			if(!Float.isNaN(p1.xyz.z) && Float.isNaN(p2.xyz.z))
+			if(!Double.isNaN(p1.xyz.z) && Double.isNaN(p2.xyz.z))
 				z3 = p1.xyz.z;
-			else if(Float.isNaN(p1.xyz.z) && !Float.isNaN(p2.xyz.z))
+			else if(Double.isNaN(p1.xyz.z) && !Double.isNaN(p2.xyz.z))
 				z3 = p2.xyz.z;
-			else if(!Float.isNaN(p1.xyz.z) && !Float.isNaN(p2.xyz.z)){					
-				w2 = (float)( Math.sqrt( (x3      -p1.xyz.x)*(x3      -p1.xyz.x) + (y3      -p1.xyz.y)*(y3      -p1.xyz.y) )
+			else if(!Double.isNaN(p1.xyz.z) && !Double.isNaN(p2.xyz.z)){					
+				w2 = (double)( Math.sqrt( (x3      -p1.xyz.x)*(x3      -p1.xyz.x) + (y3      -p1.xyz.y)*(y3      -p1.xyz.y) )
 				            / Math.sqrt( (p2.xyz.x-p1.xyz.x)*(p2.xyz.x-p1.xyz.x) + (p2.xyz.y-p1.xyz.y)*(p2.xyz.y-p1.xyz.y) ));
 				w1 = 1-w2;
 				z3 = w1*p1.xyz.z+w2*p2.xyz.z;
@@ -599,21 +599,21 @@ public class GridLoader implements IColorMappable{
 			alpha = Math.asin(y3/ringRadius);
 			
 			if(p1.xyz.x<0 && p2.xyz.x<0)
-				x3 = -(float)Math.cos(alpha)*ringRadius;
+				x3 = -(double)Math.cos(alpha)*ringRadius;
 			else if(p1.xyz.x>0 && p2.xyz.x>0)
-				x3 =  (float)Math.cos(alpha)*ringRadius;
+				x3 =  (double)Math.cos(alpha)*ringRadius;
 			else if(p1.xyz.x==-p2.xyz.x)
 				x3 = 0; // ne peut pas arriver
 			else
 				throw new ArithmeticException(("no alignement between p1(" +p1.xyz.x + "," + p1.xyz.y + "," + p1.xyz.z + ") and p2(" +p2.xyz.x + "," + p2.xyz.y + "," + p2.xyz.z + ")"));
 			
 			// and now get z3
-			if(!Float.isNaN(p1.xyz.z) && Float.isNaN(p2.xyz.z))
+			if(!Double.isNaN(p1.xyz.z) && Double.isNaN(p2.xyz.z))
 				z3 = p1.xyz.z;
-			else if(Float.isNaN(p1.xyz.z) && !Float.isNaN(p2.xyz.z))
+			else if(Double.isNaN(p1.xyz.z) && !Double.isNaN(p2.xyz.z))
 				z3 = p2.xyz.z;
-			else if(!Float.isNaN(p1.xyz.z) && !Float.isNaN(p2.xyz.z)){		
-				w2 = (float)( Math.sqrt( (x3      -p1.xyz.x)*(x3      -p1.xyz.x) + (y3      -p1.xyz.y)*(y3      -p1.xyz.y) )
+			else if(!Double.isNaN(p1.xyz.z) && !Double.isNaN(p2.xyz.z)){		
+				w2 = (double)( Math.sqrt( (x3      -p1.xyz.x)*(x3      -p1.xyz.x) + (y3      -p1.xyz.y)*(y3      -p1.xyz.y) )
 			                / Math.sqrt( (p2.xyz.x-p1.xyz.x)*(p2.xyz.x-p1.xyz.x) + (p2.xyz.y-p1.xyz.y)*(p2.xyz.y-p1.xyz.y) ));
 				w1 = 1-w2;
 				z3 = w1*p1.xyz.z+w2*p2.xyz.z;
@@ -641,22 +641,22 @@ public class GridLoader implements IColorMappable{
 	
 	@Override
     public void setMin(double zmin){
-		colorZmin = (float)zmin;
+		colorZmin = (double)zmin;
 	}
 	
 	@Override
     public void setMax(double zmax){
-		colorZmax = (float)zmax;
+		colorZmax = (double)zmax;
 	}
 		
 	/**********************************************************************/
 	
-	private float colorZmin = Float.NaN;
-	private float colorZmax = Float.NaN;
+	private double colorZmin = Double.NaN;
+	private double colorZmax = Double.NaN;
 	
-	public float x[];
-	public float y[];
-	public float z[][];
+	public double x[];
+	public double y[];
+	public double z[][];
 	
 	private BoundingBox3d bbox;
 	

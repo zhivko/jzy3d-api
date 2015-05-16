@@ -42,7 +42,7 @@ public class DelaunayTessellator extends Tessellator{
     }
 
     @Override
-    public AbstractComposite build(float[] x, float[] y, float[] z) {
+    public AbstractComposite build(double[] x, double[] y, double[] z) {
         throw new RuntimeException("not called");
     }
 }

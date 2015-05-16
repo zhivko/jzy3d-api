@@ -107,17 +107,17 @@ public class Camera extends AbstractViewportManager {
      * view. As a side effect, the "far" clipping plane is modified according to
      * the eye-target distance, and the position of the "near" clipping plane.
      */
-    public void setRenderingSphereRadius(float radius) {
+    public void setRenderingSphereRadius(double radius) {
         this.radius = radius;
-        this.near = (float) eye.distance(target) - radius * 2;
-        this.far = (float) eye.distance(target) + radius * 2;
+        this.near = (double) eye.distance(target) - radius * 2;
+        this.far = (double) eye.distance(target) + radius * 2;
     }
 
     /**
      * Return the radius of the sphere that will be contained into the rendered
      * view.
      */
-    public float getRenderingSphereRadius() {
+    public double getRenderingSphereRadius() {
         return radius;
     }
 
@@ -126,18 +126,18 @@ public class Camera extends AbstractViewportManager {
      * that {@link Camera.setRenderingSphereRadius} modified the "far" clipping
      * plane.
      */
-    public void setRenderingDepth(float near, float far) {
+    public void setRenderingDepth(double near, double far) {
         this.near = near;
         this.far = far;
     }
 
     /** Return the position of the "near" clipping plane */
-    public float getNear() {
+    public double getNear() {
         return near;
     }
 
     /** Return the position of the "far" clipping plane */
-    public float getFar() {
+    public double getFar() {
         return far;
     }
 
@@ -159,10 +159,10 @@ public class Camera extends AbstractViewportManager {
      */
     public Coord3d screenToModel(GL gl, GLU glu, Coord3d screen) {
         int viewport[] = getViewPortAsInt(gl);
-        float worldcoord[] = new float[3];// wx, wy, wz;// returned xyz coords
-        float realy = screen.y;// viewport[3] - (int)screen.y - 1;
+        double worldcoord[] = new double[3];// wx, wy, wz;// returned xyz coords
+        double realy = screen.y;// viewport[3] - (int)screen.y - 1;
 
-        boolean s = glu.gluUnProject(screen.x, realy, screen.z, getModelViewAsFloat(gl), 0, getProjectionAsFloat(gl), 0, viewport, 0, worldcoord, 0);
+        boolean s = glu.gluUnProject(screen.x, realy, screen.z, getModelViewAsDouble(gl), 0, getProjectionAsDouble(gl), 0, viewport, 0, worldcoord, 0);
         if (!s)
             failedProjection("Could not retrieve screen coordinates in model.");
 
@@ -179,19 +179,19 @@ public class Camera extends AbstractViewportManager {
     public Coord3d modelToScreen(GL gl, GLU glu, Coord3d point) {
         int viewport[] = getViewPortAsInt(gl);
 
-        float screencoord[] = new float[3];// wx, wy, wz;// returned xyz coords
-        if (!glu.gluProject(point.x, point.y, point.z, getModelViewAsFloat(gl), 0, getProjectionAsFloat(gl), 0, viewport, 0, screencoord, 0))
+        double screencoord[] = new double[3];// wx, wy, wz;// returned xyz coords
+        if (!glu.gluProject(point.x, point.y, point.z, getModelViewAsDouble(gl), 0, getProjectionAsDouble(gl), 0, viewport, 0, screencoord, 0))
             failedProjection("Could not retrieve model coordinates in screen for " + point);
         return new Coord3d(screencoord[0], screencoord[1], screencoord[2]);
     }
 
     public Coord3d[] modelToScreen(GL gl, GLU glu, Coord3d[] points) {
         int viewport[] = getViewPortAsInt(gl);
-        float screencoord[] = new float[3];
+        double screencoord[] = new double[3];
 
         Coord3d[] projection = new Coord3d[points.length];
         for (int i = 0; i < points.length; i++) {
-            if (!glu.gluProject(points[i].x, points[i].y, points[i].z, getModelViewAsFloat(gl), 0, getProjectionAsFloat(gl), 0, viewport, 0, screencoord, 0))
+            if (!glu.gluProject(points[i].x, points[i].y, points[i].z, getModelViewAsDouble(gl), 0, getProjectionAsDouble(gl), 0, viewport, 0, screencoord, 0))
                 failedProjection("Could not retrieve model coordinates in screen for " + points[i]);
             projection[i] = new Coord3d(screencoord[0], screencoord[1], screencoord[2]);
         }
@@ -200,13 +200,13 @@ public class Camera extends AbstractViewportManager {
 
     public Coord3d[][] modelToScreen(GL gl, GLU glu, Coord3d[][] points) {
         int viewport[] = getViewPortAsInt(gl);
-        float screencoord[] = new float[3];
+        double screencoord[] = new double[3];
 
         Coord3d[][] projection = new Coord3d[points.length][points[0].length];
 
         for (int i = 0; i < points.length; i++) {
             for (int j = 0; j < points[i].length; j++) {
-                if (!glu.gluProject(points[i][j].x, points[i][j].y, points[i][j].z, getModelViewAsFloat(gl), 0, getProjectionAsFloat(gl), 0, viewport, 0, screencoord, 0))
+                if (!glu.gluProject(points[i][j].x, points[i][j].y, points[i][j].z, getModelViewAsDouble(gl), 0, getProjectionAsDouble(gl), 0, viewport, 0, screencoord, 0))
                     failedProjection("Could not retrieve model coordinates in screen for " + points[i][j]);
                 projection[i][j] = new Coord3d(screencoord[0], screencoord[1], screencoord[2]);
             }
@@ -216,11 +216,11 @@ public class Camera extends AbstractViewportManager {
 
     public List<Coord3d> modelToScreen(GL gl, GLU glu, List<Coord3d> points) {
         int viewport[] = getViewPortAsInt(gl);
-        float screencoord[] = new float[3];
+        double screencoord[] = new double[3];
 
         List<Coord3d> projection = new Vector<Coord3d>();
         for (Coord3d point : points) {
-            if (!glu.gluProject(point.x, point.y, point.z, getModelViewAsFloat(gl), 0, getProjectionAsFloat(gl), 0, viewport, 0, screencoord, 0))
+            if (!glu.gluProject(point.x, point.y, point.z, getModelViewAsDouble(gl), 0, getProjectionAsDouble(gl), 0, viewport, 0, screencoord, 0))
                 failedProjection("Could not retrieve model coordinates in screen for " + point);
             projection.add(new Coord3d(screencoord[0], screencoord[1], screencoord[2]));
         }
@@ -229,13 +229,13 @@ public class Camera extends AbstractViewportManager {
 
     public ArrayList<ArrayList<Coord3d>> modelToScreen(GL gl, GLU glu, ArrayList<ArrayList<Coord3d>> polygons) {
         int viewport[] = getViewPortAsInt(gl);
-        float screencoord[] = new float[3];
+        double screencoord[] = new double[3];
 
         ArrayList<ArrayList<Coord3d>> projections = new ArrayList<ArrayList<Coord3d>>(polygons.size());
         for (ArrayList<Coord3d> polygon : polygons) {
             ArrayList<Coord3d> projection = new ArrayList<Coord3d>(polygon.size());
             for (Coord3d point : polygon) {
-                if (!glu.gluProject(point.x, point.y, point.z, getModelViewAsFloat(gl), 0, getProjectionAsFloat(gl), 0, viewport, 0, screencoord, 0))
+                if (!glu.gluProject(point.x, point.y, point.z, getModelViewAsDouble(gl), 0, getProjectionAsDouble(gl), 0, viewport, 0, screencoord, 0))
                     failedProjection("Could not retrieve model coordinates in screen for " + point);
                 projection.add(new Coord3d(screencoord[0], screencoord[1], screencoord[2]));
             }
@@ -246,16 +246,16 @@ public class Camera extends AbstractViewportManager {
 
     public PolygonArray modelToScreen(GL gl, GLU glu, PolygonArray polygon) {
         int viewport[] = getViewPortAsInt(gl);
-        float screencoord[] = new float[3];
+        double screencoord[] = new double[3];
 
         int len = polygon.length();
 
-        float[] x = new float[len];
-        float[] y = new float[len];
-        float[] z = new float[len];
+        double[] x = new double[len];
+        double[] y = new double[len];
+        double[] z = new double[len];
 
         for (int i = 0; i < len; i++) {
-            if (!glu.gluProject(polygon.x[i], polygon.y[i], polygon.z[i], getModelViewAsFloat(gl), 0, getProjectionAsFloat(gl), 0, viewport, 0, screencoord, 0))
+            if (!glu.gluProject(polygon.x[i], polygon.y[i], polygon.z[i], getModelViewAsDouble(gl), 0, getProjectionAsDouble(gl), 0, viewport, 0, screencoord, 0))
                 failedProjection("Could not retrieve model coordinates in screen for point " + i);
             x[i] = screencoord[0];
             y[i] = screencoord[1];
@@ -270,9 +270,9 @@ public class Camera extends AbstractViewportManager {
 
         int xlen = grid.getX().length;
         int ylen = grid.getY().length;
-        float[] x = new float[xlen];
-        float[] y = new float[ylen];
-        float[][] z = new float[xlen][ylen];
+        double[] x = new double[xlen];
+        double[] y = new double[ylen];
+        double[][] z = new double[xlen][ylen];
 
         for (int i = 0; i < xlen; i++) {
             for (int j = 0; j < ylen; j++) {
@@ -280,9 +280,9 @@ public class Camera extends AbstractViewportManager {
                 // grid.getZ()[i][j], getModelViewAsFloat(gl), 0,
                 // getProjectionAsFloat(gl), 0, viewport, 0, screencoord, 0 ) )
                 failedProjection("Could not retrieve model coordinates in screen for point " + i);
-                x[i] = (float) screencoord[0];
-                y[j] = (float) screencoord[1]; // STUPID :)
-                z[i][j] = (float) screencoord[2];
+                x[i] = (double) screencoord[0];
+                y[j] = (double) screencoord[1]; // STUPID :)
+                z[i][j] = (double) screencoord[2];
             }
         }
         return new Grid(x, y, z);
@@ -290,19 +290,19 @@ public class Camera extends AbstractViewportManager {
 
     public PolygonArray[][] modelToScreen(GL gl, GLU glu, PolygonArray[][] polygons) {
         int viewport[] = getViewPortAsInt(gl);
-        float screencoord[] = new float[3];
+        double screencoord[] = new double[3];
 
         PolygonArray[][] projections = new PolygonArray[polygons.length][polygons[0].length];
         for (int i = 0; i < polygons.length; i++) {
             for (int j = 0; j < polygons[i].length; j++) {
                 PolygonArray polygon = polygons[i][j];
                 int len = polygon.length();
-                float[] x = new float[len];
-                float[] y = new float[len];
-                float[] z = new float[len];
+                double[] x = new double[len];
+                double[] y = new double[len];
+                double[] z = new double[len];
 
                 for (int k = 0; k < len; k++) {
-                    if (!glu.gluProject(polygon.x[k], polygon.y[k], polygon.z[k], getModelViewAsFloat(gl), 0, getProjectionAsFloat(gl), 0, viewport, 0, screencoord, 0))
+                    if (!glu.gluProject(polygon.x[k], polygon.y[k], polygon.z[k], getModelViewAsDouble(gl), 0, getProjectionAsDouble(gl), 0, viewport, 0, screencoord, 0))
                         failedProjection("Could not retrieve model coordinates in screen for point " + k);
                     x[k] = screencoord[0];
                     y[k] = screencoord[1];
@@ -332,7 +332,7 @@ public class Camera extends AbstractViewportManager {
     }
 
     protected double[] getProjectionAsDouble(GL gl) {
-        // Consider using single precision (=float ?)
+        // Consider using single precision (=double ?)
         double projection[] = new double[16];
         if (gl.isGL2()) {
             gl.getGL2().glGetDoublev(GLMatrixFunc.GL_PROJECTION_MATRIX, projection, 0);
@@ -349,7 +349,7 @@ public class Camera extends AbstractViewportManager {
     }
 
     protected double[] getModelViewAsDouble(GL gl) {
-        // Consider using single precision (=float ?)
+        // Consider using single precision (=double ?)
         double modelview[] = new double[16];
 
         if (gl.isGL2()) {
@@ -376,13 +376,13 @@ public class Camera extends AbstractViewportManager {
             gl.getGL2().glBegin(GL.GL_POINTS);
             gl.getGL2().glPointSize(camWidth);
             gl.getGL2().glColor4f(camColor.r, camColor.g, camColor.b, camColor.a);
-            gl.getGL2().glVertex3f(eye.x, eye.y, eye.z);
+            gl.getGL2().glVertex3d(eye.x, eye.y, eye.z);
             gl.getGL2().glEnd();
         } else {
             gl.getGL2().glBegin(GL.GL_POINTS);
             gl.getGL2().glPointSize(camWidth);
             gl.getGL2().glColor4f(camColor.r, camColor.g, camColor.b, camColor.a);
-            gl.getGL2().glVertex3f(eye.x, eye.y, eye.z);
+            gl.getGL2().glVertex3d(eye.x, eye.y, eye.z);
             gl.getGL2().glEnd();
         }
     }
@@ -438,7 +438,7 @@ public class Camera extends AbstractViewportManager {
         if (projection == CameraMode.PERSPECTIVE) {
             boolean stretchToFill = ViewportMode.STRETCH_TO_FILL.equals(viewport.getMode());
 
-            glu.gluPerspective(computeFieldOfView(radius * 2, eye.distance(target)), stretchToFill ? ((float) screenWidth) / ((float) screenHeight) : 1, near, far);
+            glu.gluPerspective(computeFieldOfView(radius * 2, eye.distance(target)), stretchToFill ? ((double) screenWidth) / ((double) screenHeight) : 1, near, far);
         } else if (projection == CameraMode.ORTHOGONAL) {
             if (gl.isGL2()) {
                 if (ViewportMode.STRETCH_TO_FILL.equals(viewport.getMode()))
@@ -449,11 +449,11 @@ public class Camera extends AbstractViewportManager {
                     gl.getGL2().glOrtho(-radius, +radius, -radius, +radius, near, far);
             } else {
                 if (ViewportMode.STRETCH_TO_FILL.equals(viewport.getMode()))
-                    GLES2CompatUtils.glOrtho(-radius, +radius, -radius, +radius, near, far);
+                    GLES2CompatUtils.glOrtho((float)-radius, (float)radius, (float)-radius, (float)radius, (float)near, (float)far);
                 else if (ViewportMode.RECTANGLE_NO_STRETCH.equals(viewport.getMode()))
-                    GLES2CompatUtils.glOrtho(-radius * viewport.ratio(), +radius * viewport.ratio(), -radius, +radius, near, far);
+                    GLES2CompatUtils.glOrtho((float)(-radius * viewport.ratio()), (float)(radius * viewport.ratio()), (float)-radius, (float)+radius, (float)near, (float)far);
                 else if (ViewportMode.SQUARE.equals(viewport.getMode()))
-                    GLES2CompatUtils.glOrtho(-radius, +radius, -radius, +radius, near, far);
+                    GLES2CompatUtils.glOrtho((float)-radius, (float)+radius, (float)-radius, (float)+radius, (float)near, (float)far);
             }
 
             // gl.glOrtho(-radius * viewport.ratio(), +radius *
@@ -572,9 +572,9 @@ public class Camera extends AbstractViewportManager {
     protected Coord3d target;
     protected Coord3d up;
 
-    protected float radius;
-    protected float near;
-    protected float far;
+    protected double radius;
+    protected double near;
+    protected double far;
 
     protected boolean useSquaredDistance = DEFAULT_CAMERA_DISTANCE_MODE;
 }

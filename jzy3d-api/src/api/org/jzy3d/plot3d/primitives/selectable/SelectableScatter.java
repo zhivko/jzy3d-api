@@ -51,7 +51,7 @@ public class SelectableScatter extends Scatter implements ISingleColorable,
 						k++;
 					}
 
-					gl.getGL2().glVertex3f(c.x, c.y, c.z);
+					gl.getGL2().glVertex3d(c.x, c.y, c.z);
 				}
 			}
 			gl.getGL2().glEnd();
@@ -75,7 +75,7 @@ public class SelectableScatter extends Scatter implements ISingleColorable,
 						k++;
 					}
 
-					GLES2CompatUtils.glVertex3f(c.x, c.y, c.z);
+					GLES2CompatUtils.glVertex3f((float)c.x, (float)c.y, (float)c.z);
 				}
 			}
 			GLES2CompatUtils.glEnd();

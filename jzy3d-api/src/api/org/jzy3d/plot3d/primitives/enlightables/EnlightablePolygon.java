@@ -66,8 +66,8 @@ public class EnlightablePolygon extends AbstractEnlightable {
 					} else
 						gl.getGL2().glColor4f(p.rgb.r, p.rgb.g, p.rgb.b,
 								p.rgb.a);
-					gl.getGL2().glVertex3f(p.xyz.x, p.xyz.y, p.xyz.z);
-					gl.getGL2().glNormal3f(norm.x, norm.y, norm.z);
+					gl.getGL2().glVertex3d(p.xyz.x, p.xyz.y, p.xyz.z);
+					gl.getGL2().glNormal3d(norm.x, norm.y, norm.z);
 				}
 				gl.getGL2().glEnd();
 				if (wfstatus)
@@ -86,8 +86,8 @@ public class EnlightablePolygon extends AbstractEnlightable {
 
 				gl.getGL2().glBegin(GL2.GL_POLYGON);
 				for (Point p : points) {
-					gl.getGL2().glVertex3f(p.xyz.x, p.xyz.y, p.xyz.z);
-					gl.getGL2().glNormal3f(norm.x, norm.y, norm.z);
+					gl.getGL2().glVertex3d(p.xyz.x, p.xyz.y, p.xyz.z);
+					gl.getGL2().glNormal3d(norm.x, norm.y, norm.z);
 				}
 				gl.getGL2().glEnd();
 				gl.glDisable(GL.GL_POLYGON_OFFSET_FILL);
@@ -112,8 +112,8 @@ public class EnlightablePolygon extends AbstractEnlightable {
 					} else
 						GLES2CompatUtils.glColor4f(p.rgb.r, p.rgb.g,
 								p.rgb.b, p.rgb.a);
-					GLES2CompatUtils.glVertex3f(p.xyz.x, p.xyz.y, p.xyz.z);
-					GLES2CompatUtils.glNormal3f(norm.x, norm.y, norm.z);
+					GLES2CompatUtils.glVertex3f((float)p.xyz.x, (float)p.xyz.y, (float)p.xyz.z);
+					GLES2CompatUtils.glNormal3f((float)norm.x, (float)norm.y, (float)norm.z);
 				}
 				GLES2CompatUtils.glEnd();
 				if (wfstatus)
@@ -134,8 +134,8 @@ public class EnlightablePolygon extends AbstractEnlightable {
 
 				GLES2CompatUtils.glBegin(GL2.GL_POLYGON);
 				for (Point p : points) {
-					GLES2CompatUtils.glVertex3f(p.xyz.x, p.xyz.y, p.xyz.z);
-					GLES2CompatUtils.glNormal3f(norm.x, norm.y, norm.z);
+					GLES2CompatUtils.glVertex3f((float)p.xyz.x, (float)p.xyz.y, (float)p.xyz.z);
+					GLES2CompatUtils.glNormal3f((float)norm.x, (float)norm.y, (float)norm.z);
 				}
 				GLES2CompatUtils.glEnd();
 				gl.glDisable(GL.GL_POLYGON_OFFSET_FILL);

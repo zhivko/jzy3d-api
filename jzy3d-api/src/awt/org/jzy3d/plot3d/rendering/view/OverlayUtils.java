@@ -67,7 +67,7 @@ public class OverlayUtils {
 		int dmax = Math.max(wmax, hmax);
 		
 		for (int i = 0; i < dmax; i++) { // try a diagonal
-			float r  = ((float)i) / ((float)dmax);
+			double r  = ((double)i) / ((double)dmax);
 			int wcur = (int)( r * wmax );
 			int hcur = (int)( r * hmax );
 			//System.out.println(wcur + " " + hcur);
@@ -116,8 +116,8 @@ public class OverlayUtils {
 		
 	protected PolygonArray canvasToViewport(PolygonArray p, Rectangle viewport){
 		int len = p.length();
-		float[] x = new float[len];
-		float[] y = new float[len];
+		double[] x = new double[len];
+		double[] y = new double[len];
 		
 		for (int i = 0; i < len; i++)
 			x[i] = p.x[i] - viewport.x;
@@ -136,23 +136,23 @@ public class OverlayUtils {
 		int canvasHeight = chart.getCanvas().getRendererHeight();
 		
 		IntegerCoord2d output = new IntegerCoord2d();
-		output.x = (int)( ( ((float)input.x) / ((float)viewport.width) )  * canvasWidth );
-		output.y = (int)( ( ((float)input.y) / ((float)viewport.height) ) * canvasHeight );
+		output.x = (int)( ( ((double)input.x) / ((double)viewport.width) )  * canvasWidth );
+		output.y = (int)( ( ((double)input.y) / ((double)viewport.height) ) * canvasHeight );
 		return output;
 	}
 	
 	protected void projectionStat(PolygonArray[][] array){
-		float min = Float.POSITIVE_INFINITY;
-		float max = Float.NEGATIVE_INFINITY;
+		double min = Double.POSITIVE_INFINITY;
+		double max = Double.NEGATIVE_INFINITY;
 		
 		for (int i = 0; i < array.length; i++) {
 			for (int j = 0; j < array[i].length; j++) {
 				PolygonArray p = array[i][j];
 				
-				float tmax = Statistics.max(p.x);
+				double tmax = Statistics.max(p.x);
 				if(tmax > max)
 					max = tmax;
-				float tmin = Statistics.min(p.x);
+				double tmin = Statistics.min(p.x);
 				if(tmin < min)
 					min = tmin;
 			}

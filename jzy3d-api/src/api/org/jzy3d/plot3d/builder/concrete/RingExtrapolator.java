@@ -10,7 +10,7 @@ import org.jzy3d.plot3d.primitives.Shape;
 
 
 public class RingExtrapolator extends OrthonormalTessellator{
-	public RingExtrapolator(float ringMax, ColorMapper cmap, Color factor){
+	public RingExtrapolator(double ringMax, ColorMapper cmap, Color factor){
 		this.ringMax      = ringMax;
 		this.cmap         = cmap;
 		this.factor       = factor;
@@ -23,7 +23,7 @@ public class RingExtrapolator extends OrthonormalTessellator{
 	}
 	
 	@Override
-    public AbstractComposite build(float[] x, float[] y, float[] z) {
+    public AbstractComposite build(double[] x, double[] y, double[] z) {
 		setData(x, y, z);
 		Shape s = new Shape();
 		s.add(getExtrapolatedRingPolygons());
@@ -34,12 +34,12 @@ public class RingExtrapolator extends OrthonormalTessellator{
 	
 	public List<AbstractDrawable> getExtrapolatedRingPolygons(){
 		//backup current coords and extrapolate
-		float[]   xbackup = x;
-		float[]   ybackup = y;
-		float[][] zbackup = z;
+		double[]   xbackup = x;
+		double[]   ybackup = y;
+		double[][] zbackup = z;
 		
 		// compute required extrapolation
-		float step = x[1] - x[0];
+		double step = x[1] - x[0];
 		int  nstep = x.length;
 		
 		int ENLARGE = 2;		
@@ -65,17 +65,17 @@ public class RingExtrapolator extends OrthonormalTessellator{
 	/** Add extrapolated points on the grid. If the grid is too small for extrapolation, the arrays
 	 * are maximized */
 	public void extrapolate(int n){
-		float[]   xnew = new float[x.length+n*2];
-		float[]   ynew = new float[y.length+n*2];
-		float[][] znew = new float[x.length+n*2][y.length+n*2];
+		double[]   xnew = new double[x.length+n*2];
+		double[]   ynew = new double[y.length+n*2];
+		double[][] znew = new double[x.length+n*2][y.length+n*2];
 		
 		// assume x and y grid are allready sorted and create new grids
-		float xmin = x[0];
-		float xmax = x[x.length-1];
-		float xgap = x[1]-x[0];		
-		float ymin = y[0];
-		float ymax = y[y.length-1];
-		float ygap = y[1]-y[0];
+		double xmin = x[0];
+		double xmax = x[x.length-1];
+		double xgap = x[1]-x[0];		
+		double ymin = y[0];
+		double ymax = y[y.length-1];
+		double ygap = y[1]-y[0];
 		
 		for(int i=0; i<xnew.length; i++){
 			// --- x grid ---
@@ -109,8 +109,8 @@ public class RingExtrapolator extends OrthonormalTessellator{
 		}
 		
 		// extrapolation
-		float olddiameter = xgap*(x.length    )/2;
-		float newdiameter = xgap*(x.length-1+n*2)/2;
+		double olddiameter = xgap*(x.length    )/2;
+		double newdiameter = xgap*(x.length-1+n*2)/2;
 		olddiameter *= olddiameter;
 		newdiameter *= newdiameter;
 		
@@ -120,7 +120,7 @@ public class RingExtrapolator extends OrthonormalTessellator{
 		// start from center, and add extrapolated values iteratively on each quadrant
 		for(int i=xmiddle; i<xnew.length; i++){			
 			for(int j=ymiddle; j<ynew.length; j++){
-				float sqrad = xnew[i]*xnew[i]+ynew[j]*ynew[j]; // distance to center
+				double sqrad = xnew[i]*xnew[i]+ynew[j]*ynew[j]; // distance to center
 				
 				// ignore existing values
 				if(sqrad < olddiameter) 
@@ -150,18 +150,18 @@ public class RingExtrapolator extends OrthonormalTessellator{
 		z = znew;
 	}
 	
-	private float getExtrapolatedZ(float[][] grid, int currentXi, int currentYi){
+	private double getExtrapolatedZ(double[][] grid, int currentXi, int currentYi){
 		int left   = currentXi-1>0              ? currentXi-1 : currentXi;
 		int right  = currentXi+1<grid.length    ? currentXi+1 : currentXi;
 		int bottom = currentYi-1>0              ? currentYi-1 : currentYi;
 		int up     = currentYi+1<grid[0].length ? currentYi+1 : currentYi;
 		
-		float cumval = 0;
+		double cumval = 0;
 		int   nval   = 0;
 		
 		for(int u=left; u<=right; u++)
 			for(int v=bottom; v<=up; v++)
-				if(!Float.isNaN(grid[u][v])){
+				if(!Double.isNaN(grid[u][v])){
 					cumval += grid[u][v];
 					nval   ++;
 				}
@@ -174,7 +174,7 @@ public class RingExtrapolator extends OrthonormalTessellator{
 	
 	/*************************************************************************************/
 	
-	protected float       ringMax;
+	protected double       ringMax;
 	protected ColorMapper cmap;
 	protected Color       factor;
 	

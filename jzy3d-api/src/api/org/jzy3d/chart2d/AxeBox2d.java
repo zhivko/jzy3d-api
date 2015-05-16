@@ -99,8 +99,8 @@ public class AxeBox2d extends AxeBox {
             // compute a corrected position according to layout
             Coord3d posScreen = cam.modelToScreen(gl, glu, position);
             float strlen = glut.glutBitmapLength(font, text);
-            float x = computeXWithAlign(halign, posScreen, strlen, 0.0f);
-            float y = computeYWithAlign(valign, posScreen, 0.0f);
+            double x = computeXWithAlign(halign, posScreen, strlen, 0.0f);
+            double y = computeYWithAlign(valign, posScreen, 0.0f);
             Coord3d posScreenShifted = new Coord3d(x + screenOffset.x, y + screenOffset.y, posScreen.z);
 
             Coord3d posReal;
@@ -130,7 +130,7 @@ public class AxeBox2d extends AxeBox {
             loadIdentity(gl);
             rotateOf(gl, 90, AXE_Z);
             translateTo(gl, posReal, false);
-            gl.getGL2().glScalef(scale.x, scale.y, scale.z);
+            gl.getGL2().glScaled(scale.x, scale.y, scale.z);
             
             gl.getGL2().glPopMatrix();
         }
@@ -146,12 +146,12 @@ public class AxeBox2d extends AxeBox {
         public void translateTo(GL gl, Coord3d position, boolean reverse) {
             if (gl.isGLES()) {
                 float reverseCoef = (reverse ? -1.0f : 1.0f);
-                GLES2CompatUtils.glTranslatef(reverseCoef * position.x, reverseCoef * position.y, reverseCoef * position.z);
+                GLES2CompatUtils.glTranslatef((float)(reverseCoef * position.x), (float)(reverseCoef * position.y), (float)(reverseCoef * position.z));
             } else {
                 if (reverse)
-                    gl.getGL2().glTranslatef(-position.x, -position.y, -position.z);
+                    gl.getGL2().glTranslated(-position.x, -position.y, -position.z);
                 else
-                    gl.getGL2().glTranslatef(position.x, position.y / 2, position.z);
+                    gl.getGL2().glTranslated(position.x, position.y / 2, position.z);
             }
         }
     }

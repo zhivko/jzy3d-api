@@ -5,13 +5,13 @@ import java.util.List;
 
 /**
  * A simple utility class for storing a list of x, y, and z coordinates as
- * arrays of float values.
+ * arrays of double values.
  * 
  * @author Martin Pernollet
  */
 public class Coordinates {
     /** Initialize a list of coordinates with X, Y, and Z values */
-    public Coordinates(float[] x, float[] y, float[] z) {
+    public Coordinates(double[] x, double[] y, double[] z) {
         this.x = x;
         this.y = y;
         this.z = z;
@@ -29,9 +29,9 @@ public class Coordinates {
      */
     public Coordinates(Coord3d coord1, Coord3d... coords) {
 
-        x = new float[coords.length + 1];
-        y = new float[coords.length + 1];
-        z = new float[coords.length + 1];
+        x = new double[coords.length + 1];
+        y = new double[coords.length + 1];
+        z = new double[coords.length + 1];
 
         x[0] = coord1.x;
         y[0] = coord1.y;
@@ -49,9 +49,9 @@ public class Coordinates {
 
     /** Initialize a Grid with a list of coordinates values */
     public Coordinates(List<Coord3d> coords) {
-        x = new float[coords.size()];
-        y = new float[coords.size()];
-        z = new float[coords.size()];
+        x = new double[coords.size()];
+        y = new double[coords.size()];
+        z = new double[coords.size()];
 
         for (int i = 0; i < coords.size(); i++) {
             x[i] = coords.get(i).x;
@@ -61,17 +61,17 @@ public class Coordinates {
     }
 
     /** Return the array of X values. */
-    public float[] getX() {
+    public double[] getX() {
         return x;
     }
 
     /** Return the array of Y values. */
-    public float[] getY() {
+    public double[] getY() {
         return y;
     }
 
     /** Return the array of Z values. */
-    public float[] getZ() {
+    public double[] getZ() {
         return z;
     }
 
@@ -99,7 +99,7 @@ public class Coordinates {
 
     /*************************************************************/
 
-    private float[] x;
-    private float[] y;
-    private float[] z;
+    private double[] x;
+    private double[] y;
+    private double[] z;
 }

@@ -31,14 +31,14 @@ public abstract class Mapper {
 	public Coordinates getCoordinates(double[][] xy){
 		double[] zd = getZ(xy);
 		
-		float [] x = new float[xy.length];
-		float [] y = new float[xy.length];
-		float [] z = new float[xy.length];
+		double [] x = new double[xy.length];
+		double [] y = new double[xy.length];
+		double [] z = new double[xy.length];
 		
 		for(int m=0; m<xy.length; m++){
-			x[m] = (float)xy[m][0];
-			y[m] = (float)xy[m][1];
-			z[m] = (float)zd[m];
+			x[m] = xy[m][0];
+			y[m] = xy[m][1];
+			z[m] = zd[m];
 		}
 
 		return new Coordinates(x, y, z);
@@ -61,13 +61,13 @@ public abstract class Mapper {
 	 * Return a structure containing X, Y, and Z coordinates as arrays of float.
 	 */
 	public Coordinates getCoordinates(double[] xy){
-		float[] x = new float[1];
-		float[] y = new float[1];
-		float[] z = new float[1];
+		double[] x = new double[1];
+		double[] y = new double[1];
+		double[] z = new double[1];
 		
-		x[0] = (float)xy[0];
-		y[0] = (float)xy[1];
-		z[0] = (float)getZ(xy);
+		x[0] = xy[0];
+		y[0] = xy[1];
+		z[0] = getZ(xy);
 		
 		return new Coordinates(x, y, z);
 	}
